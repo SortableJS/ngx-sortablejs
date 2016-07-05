@@ -1,0 +1,23 @@
+{
+  "name": "angular-sortablejs",
+  "version": "0.0.0",
+  "description": "A Angular 2+ binding to SortableJS.",
+  "main": "angular-sortable.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SortableJS/angular-sortablejs.git"
+  },
+  "keywords": [
+    "angular",
+    "sortable"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SortableJS/angular-sortablejs/issues"
+  },
+  "homepage": "https://github.com/SortableJS/angular-sortablejs#readme"
+}
