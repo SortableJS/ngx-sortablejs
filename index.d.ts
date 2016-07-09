@@ -1,4 +1,5 @@
 export let SORTABLEJS_DIRECTIVES: any[];
+export let SortablejsConfiguration: SortablejsConfigurationObject;
 
 export interface SortablejsConfigurationObject {
   defaults: SortablejsOptions;
