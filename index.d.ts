@@ -10,8 +10,8 @@ export interface SortablejsOptions {
   delay?: number;
   disabled?: boolean;
   store?: {
-    get: (sortable: Sortable) => any[];
-    set: (sortable: Sortable) => any;
+    get: (sortable: any) => any[];
+    set: (sortable: any) => any;
   };
   animation?: number;
   handle?: string;
