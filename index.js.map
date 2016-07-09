@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["src/sortable.directive.ts","index.ts"],"names":[],"mappings":""}
+{"version":3,"file":"index.js","sourceRoot":"","sources":["index.ts"],"names":[],"mappings":";AAAA,mCAAkC,0BAA0B,CAAC,CAAA;AAG7D,IAAI,qBAAqB,GAAG;IAC1B,sCAAiB;CAClB;AAMiC,6BAAqB,yBANrD;AAEF,IAAI,uBAAuB,GAAkC;IAC3D,QAAQ,EAAE,EAAE;CACb;AAEQ,+BAAuB,2BAF9B;AAEwD"}
