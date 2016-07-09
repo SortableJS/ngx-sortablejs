@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "system",
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "outFile": "index.js"
   },
   "exclude": [
     "node_modules"
