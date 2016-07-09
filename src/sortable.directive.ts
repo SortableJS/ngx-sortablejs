@@ -54,9 +54,9 @@ export class SortableDirective implements OnInit, OnDestroy {
       return {
         onEnd: (event: { oldIndex: number; newIndex: number; }) => {
           if (this._items instanceof FormArray) {
-            SortableDirective.moveFormArrayItem(this._items, event.oldIndex, event.newIndex);
+            SortableDirective.moveFormArrayItem(<FormArray>this._items, event.oldIndex, event.newIndex);
           } else {
-            SortableDirective.moveArrayItem(this._items, event.oldIndex, event.newIndex);
+            SortableDirective.moveArrayItem(<any[]>this._items, event.oldIndex, event.newIndex);
           }
 
           if (this._options.onEnd) {
