@@ -38,13 +38,13 @@ First, include `SORTABLEJS_DIRECTIVES` into your component:
        items = [1, 2, 3, 4, 5];
     }
 
-Here we importing `SORTABLEJS_DIRECTIVES` and referring them as directives in our metadata. Then we use `sortablejs` property on a container HTML element to tell Angular that this is a sortable container. We also pass the `items` array to both `*ngFor` and [sortablejs] to register the changes automatically (this is done inside of original Sortable.js onEnd event).
+Here we are importing `SORTABLEJS_DIRECTIVES` and referring them as directives in our metadata. Then we use `sortablejs` property on a container HTML element to tell Angular that this is a sortable container. We also pass the `items` array to both `*ngFor` and [sortablejs] to register the changes automatically (this is done inside of original Sortable.js `onEnd` event).
 
 That's just it... if you use the Webpack. If you use original Angular shipping with SystemJS you would need to follow the step below.
 
 ### SystemJS additional configuration
 
-Add to your `systemjs.config.js` (or another place where you configure SystemJS) file the following:
+Adapt your `systemjs.config.js` (or another place where you configure SystemJS) file with the following:
 
     ...
     var map = {
@@ -67,7 +67,7 @@ Add to your `systemjs.config.js` (or another place where you configure SystemJS)
 
     System.config(config);
 
-This is important to let SystemJS everything it needs about the dependencies.
+This is important to let SystemJS know everything it needs about the dependencies it needs to load.
 
 ## API and functionality
 
@@ -116,4 +116,4 @@ If you want to use the same sortable options across different places of your app
     // any properties and events available on original library work here as well
     SortablejsConfiguration.defaults.animation = 150;
 
-This value will be used as default one, but can be overriden by `sortablejsOptions` property.
+This value will be used as a default one, but it can be overriden by `sortablejsOptions` property.
