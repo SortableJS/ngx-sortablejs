@@ -11,9 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var forms_1 = require('@angular/forms');
 var index_1 = require('../index');
-// trying to import Sortablejs library with either webpack or SystemJS
 var Sortablejs = {
-    Sortable: (typeof require !== 'undefined' ? require : SystemJS.amdRequire)('sortablejs')
+    Sortable: require('sortablejs')
 };
 var SortableDirective = (function () {
     function SortableDirective(element) {
@@ -53,7 +52,7 @@ var SortableDirective = (function () {
                         else {
                             SortableDirective.moveArrayItem(_this._items, event.oldIndex, event.newIndex);
                         }
-                        if (_this._options.onEnd) {
+                        if (_this._options && _this._options.onEnd) {
                             _this._options.onEnd(event);
                         }
                     }

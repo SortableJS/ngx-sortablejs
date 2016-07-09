@@ -3,11 +3,8 @@ import { FormArray } from '@angular/forms';
 import { SortablejsConfiguration } from '../index';
 import { SortablejsOptions } from '../index.d';
 
-// trying to import Sortablejs library with either webpack or SystemJS
 let Sortablejs = {
-  Sortable: (
-    typeof require !== 'undefined' ? require : SystemJS.amdRequire
-  )('sortablejs')
+  Sortable: require('sortablejs')
 };
 
 @Directive({
@@ -59,7 +56,7 @@ export class SortableDirective implements OnInit, OnDestroy {
             SortableDirective.moveArrayItem(<any[]>this._items, event.oldIndex, event.newIndex);
           }
 
-          if (this._options.onEnd) {
+          if (this._options && this._options.onEnd) {
             this._options.onEnd(event);
           }
         }
