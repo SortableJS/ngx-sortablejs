@@ -1,0 +1,8 @@
+{
+  "globalDependencies": {
+    "core-js": "registry:dt/core-js#0.0.0+20160602141332",
+    "node": "registry:dt/node#6.0.0+20160709063457",
+    "sortablejs": "registry:dt/sortablejs#1.3.0-rc1+20160622114855",
+    "systemjs": "registry:dt/systemjs#0.19.29+20160702105636"
+  }
+}
