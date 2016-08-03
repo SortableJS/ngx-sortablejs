@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "postinstall": "typings install",
-    "tslint": "tslint ./app/**/*.ts -t verbose"
+    "tslint": "tslint ./app/**/*.ts -t verbose",
+    "typings": "typings install"
   },
   "repository": {
     "type": "git",
