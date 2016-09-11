@@ -1,5 +1,7 @@
+import { ModuleWithProviders } from '@angular/core';
+
 export declare class SortablejsModule {
-  static forRoot(globalOptions: SortablejsOptions): SortablejsModule;
+  static forRoot(globalOptions: SortablejsOptions): ModuleWithProviders;
 }
 
 export interface SortablejsOptions {
