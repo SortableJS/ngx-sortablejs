@@ -1,6 +1,6 @@
 {
   "name": "angular-sortablejs",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "description": "SortableJS for Angular 2+",
   "main": "index.js",
   "scripts": {
@@ -12,8 +12,14 @@
     "url": "git+https://github.com/SortableJS/angular-sortablejs.git"
   },
   "keywords": [
-    "angular",
-    "sortable"
+    "angular2-sortable",
+    "angular2-sortablejs",
+    "angular-sortable",
+    "angular-sortablejs",
+    "ng2-sortable",
+    "ng2-sortablejs",
+    "ng-sortable",
+    "ng-sortablejs"
   ],
   "author": "smnbbrv",
   "license": "MIT",
