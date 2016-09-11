@@ -1,16 +1,14 @@
 import { Directive, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormArray } from '@angular/forms';
-import { SortablejsConfiguration } from '../index';
 import { SortablejsOptions } from '../index.d';
+import { SortablejsModule } from '../index';
 
-let Sortablejs = {
-  Sortable: require('sortablejs')
-};
+let Sortable = require('sortablejs');
 
 @Directive({
   selector: '[sortablejs]'
 })
-export class SortableDirective implements OnInit, OnDestroy {
+export class SortablejsDirective implements OnInit, OnDestroy {
 
   @Input('sortablejs')
   private _items: any[] | FormArray;
@@ -18,7 +16,7 @@ export class SortableDirective implements OnInit, OnDestroy {
   @Input('sortablejsOptions')
   private _options: SortablejsOptions;
 
-  private _sortable: Sortablejs.Sortable;
+  private _sortable: any;
 
   private static moveArrayItem(array: any[], from: number, to: number) {
     array.splice(to, 0, array.splice(from, 1)[0]);
@@ -35,7 +33,7 @@ export class SortableDirective implements OnInit, OnDestroy {
 
   public ngOnInit() {
     // onChange???
-    this._sortable = new Sortablejs.Sortable(this.element.nativeElement, this.options);
+    this._sortable = new Sortable.Sortable(this.element.nativeElement, this.options);
   }
 
   public ngOnDestroy() {
@@ -43,7 +41,7 @@ export class SortableDirective implements OnInit, OnDestroy {
   }
 
   private get options() {
-    return Object.assign({}, SortablejsConfiguration.defaults, this._options, this.overridenOptions);
+    return Object.assign({}, SortablejsModule._globalOptions, this._options, this.overridenOptions);
   }
 
   private get overridenOptions(): SortablejsOptions {
@@ -51,9 +49,9 @@ export class SortableDirective implements OnInit, OnDestroy {
       return {
         onEnd: (event: { oldIndex: number; newIndex: number; }) => {
           if (this._items instanceof FormArray) {
-            SortableDirective.moveFormArrayItem(<FormArray>this._items, event.oldIndex, event.newIndex);
+            SortablejsDirective.moveFormArrayItem(<FormArray>this._items, event.oldIndex, event.newIndex);
           } else {
-            SortableDirective.moveArrayItem(<any[]>this._items, event.oldIndex, event.newIndex);
+            SortablejsDirective.moveArrayItem(<any[]>this._items, event.oldIndex, event.newIndex);
           }
 
           if (this._options && this._options.onEnd) {

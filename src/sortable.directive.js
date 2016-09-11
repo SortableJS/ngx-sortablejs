@@ -11,46 +11,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var forms_1 = require('@angular/forms');
 var index_1 = require('../index');
-var Sortablejs = {
-    Sortable: require('sortablejs')
-};
-var SortableDirective = (function () {
-    function SortableDirective(element) {
+var Sortable = require('sortablejs');
+var SortablejsDirective = (function () {
+    function SortablejsDirective(element) {
         this.element = element;
     }
-    SortableDirective.moveArrayItem = function (array, from, to) {
+    SortablejsDirective.moveArrayItem = function (array, from, to) {
         array.splice(to, 0, array.splice(from, 1)[0]);
     };
-    SortableDirective.moveFormArrayItem = function (formArray, from, to) {
+    SortablejsDirective.moveFormArrayItem = function (formArray, from, to) {
         var relocated = formArray.at(from);
         formArray.removeAt(from);
         formArray.insert(to, relocated);
     };
-    SortableDirective.prototype.ngOnInit = function () {
+    SortablejsDirective.prototype.ngOnInit = function () {
         // onChange???
-        this._sortable = new Sortablejs.Sortable(this.element.nativeElement, this.options);
+        this._sortable = new Sortable.Sortable(this.element.nativeElement, this.options);
     };
-    SortableDirective.prototype.ngOnDestroy = function () {
+    SortablejsDirective.prototype.ngOnDestroy = function () {
         this._sortable.destroy();
     };
-    Object.defineProperty(SortableDirective.prototype, "options", {
+    Object.defineProperty(SortablejsDirective.prototype, "options", {
         get: function () {
-            return Object.assign({}, index_1.SortablejsConfiguration.defaults, this._options, this.overridenOptions);
+            return Object.assign({}, index_1.SortablejsModule._globalOptions, this._options, this.overridenOptions);
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(SortableDirective.prototype, "overridenOptions", {
+    Object.defineProperty(SortablejsDirective.prototype, "overridenOptions", {
         get: function () {
             var _this = this;
             if (this._items) {
                 return {
                     onEnd: function (event) {
                         if (_this._items instanceof forms_1.FormArray) {
-                            SortableDirective.moveFormArrayItem(_this._items, event.oldIndex, event.newIndex);
+                            SortablejsDirective.moveFormArrayItem(_this._items, event.oldIndex, event.newIndex);
                         }
                         else {
-                            SortableDirective.moveArrayItem(_this._items, event.oldIndex, event.newIndex);
+                            SortablejsDirective.moveArrayItem(_this._items, event.oldIndex, event.newIndex);
                         }
                         if (_this._options && _this._options.onEnd) {
                             _this._options.onEnd(event);
@@ -66,18 +64,18 @@ var SortableDirective = (function () {
     __decorate([
         core_1.Input('sortablejs'), 
         __metadata('design:type', Object)
-    ], SortableDirective.prototype, "_items", void 0);
+    ], SortablejsDirective.prototype, "_items", void 0);
     __decorate([
         core_1.Input('sortablejsOptions'), 
         __metadata('design:type', Object)
-    ], SortableDirective.prototype, "_options", void 0);
-    SortableDirective = __decorate([
+    ], SortablejsDirective.prototype, "_options", void 0);
+    SortablejsDirective = __decorate([
         core_1.Directive({
             selector: '[sortablejs]'
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef])
-    ], SortableDirective);
-    return SortableDirective;
+    ], SortablejsDirective);
+    return SortablejsDirective;
 }());
-exports.SortableDirective = SortableDirective;
+exports.SortablejsDirective = SortablejsDirective;
 //# sourceMappingURL=sortable.directive.js.map
