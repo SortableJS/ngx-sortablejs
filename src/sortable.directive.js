@@ -26,7 +26,7 @@ var SortablejsDirective = (function () {
     };
     SortablejsDirective.prototype.ngOnInit = function () {
         // onChange???
-        this._sortable = new Sortable.Sortable(this.element.nativeElement, this.options);
+        this._sortable = new Sortable(this.element.nativeElement, this.options);
     };
     SortablejsDirective.prototype.ngOnDestroy = function () {
         this._sortable.destroy();

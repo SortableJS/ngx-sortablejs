@@ -33,7 +33,7 @@ export class SortablejsDirective implements OnInit, OnDestroy {
 
   public ngOnInit() {
     // onChange???
-    this._sortable = new Sortable.Sortable(this.element.nativeElement, this.options);
+    this._sortable = new Sortable(this.element.nativeElement, this.options);
   }
 
   public ngOnDestroy() {
