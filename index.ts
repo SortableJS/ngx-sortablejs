@@ -1,12 +1,21 @@
-import { SortableDirective } from './src/sortable.directive';
-import { SortablejsConfigurationObject } from './index.d';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SortablejsDirective } from './src/sortable.directive';
+import { SortablejsOptions } from './index.d';
 
-let SORTABLEJS_DIRECTIVES = [
-  SortableDirective
-];
+@NgModule({
+  declarations: [ SortablejsDirective ],
+  imports: [ CommonModule ],
+  exports: [ SortablejsDirective ]
+})
+export class SortablejsModule {
 
-let SortablejsConfiguration: SortablejsConfigurationObject = {
-  defaults: {}
-};
+  public static _globalOptions: SortablejsOptions = {};
 
-export { SortablejsConfiguration, SORTABLEJS_DIRECTIVES };
+  public static forRoot(globalOptions: SortablejsOptions) {
+    SortablejsModule._globalOptions = globalOptions;
+
+    return SortablejsModule;
+  }
+
+}

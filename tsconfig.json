@@ -8,7 +8,13 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "types": [
+      "node",
+      "core-js",
+      "systemjs",
+      "sortablejs"
+    ]
   },
   "exclude": [
     "node_modules"

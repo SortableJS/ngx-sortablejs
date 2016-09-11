@@ -1,8 +1,7 @@
-export let SORTABLEJS_DIRECTIVES: any[];
-export let SortablejsConfiguration: SortablejsConfigurationObject;
+import { ModuleWithProviders } from '@angular/core';
 
-export interface SortablejsConfigurationObject {
-  defaults: SortablejsOptions;
+export declare class SortablejsModule {
+  static forRoot(globalOptions: SortablejsOptions): ModuleWithProviders;
 }
 
 export interface SortablejsOptions {
