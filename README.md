@@ -1,18 +1,47 @@
 # angular-sortablejs
 
-This package is an Angular 2 binding for awesome [Sortable.js](https://github.com/RubaXa/Sortable) library which supports both Webpack and SystemJS.
-
-If you are not rc5 compliant yet, keep using the version 0.1.1.
+This package is an Angular 2 binding for [Sortable.js](https://github.com/RubaXa/Sortable). Supports standard arrays and Angular `FormArray`.
 
 ## Installation
 
-    npm install --save angular-sortablejs
+```sh
+npm install --save angular-sortablejs
+```
 
-Note: you **do not** need to install Sortable.js! It will be installed automatically.
+### Webpack configuration
+
+There is nothing to configure additionally. Enjoy!
+
+### SystemJS configuration
+
+Adapt your `systemjs.config.js` (or another place where you configure SystemJS) file with the following:
+
+```javascript
+...
+var map = {
+  ...
+  'angular-sortablejs': 'node_modules/angular-sortablejs',
+  'sortablejs': 'node_modules/sortablejs/Sortable.js',
+  ...
+};
+...
+var packages = {
+  ...
+  'angular-sortablejs': { main: 'index.js', defaultExtension: 'js' },
+  ...
+};
+...
+var config = {
+  map: map,
+  packages: packages
+};
+
+System.config(config);
+```
+
+This is important to let SystemJS know everything it needs about the dependencies it needs to load.
 
 ## Usage
-
-### Example
 
 First, import `SortablejsModule` into the angular module where you want to use it:
 
@@ -24,7 +53,9 @@ imports: [
 ]
 ```
 
-Then the you can use it in your component:
+Then use `sortablejs` property on a container HTML element to tell Angular that this is a sortable container; also pass the `items` array to both `*ngFor` and `[sortablejs]` to register the changes automatically.
+
+## Simple sortable list
 
 ```typescript
 import { Component } from '@angular/core';
@@ -50,58 +81,18 @@ export class AppComponent {
 }
 ```
 
-We use `sortablejs` property on a container HTML element to tell Angular that this is a sortable container. We also pass the `items` array to both `*ngFor` and [sortablejs] to register the changes automatically (this is done inside of original Sortable.js `onEnd` event).
+### Passing the options
 
-That's just it... if you use the Webpack. If you use original Angular shipping with SystemJS you would need to follow the step below.
-
-### SystemJS additional configuration
-
-Adapt your `systemjs.config.js` (or another place where you configure SystemJS) file with the following:
-
-```javascript
-...
-var map = {
-  ...
-  'angular-sortablejs': 'node_modules/angular-sortablejs',
-  'sortablejs': 'node_modules/sortablejs/Sortable.js',
-  ...    
-};
-...
-var packages = {
-  ...
-  'angular-sortablejs': { main: 'index.js', defaultExtension: 'js' },
-  ...
-};
-...
-var config = {
-  map: map,
-  packages: packages
-};
-
-System.config(config);
-```
-
-This is important to let SystemJS know everything it needs about the dependencies it needs to load.
-
-## API and functionality
-
-### Ordering items
-
-The array is automatically updated because you pass the `items` as `<div [sortablejs]="items">`. The `items` variable can be either a JavaScript array or Angular rc2+ forms `FormArray`. If you won't pass anything, e.g. `<div sortablejs>`, the items won't be automatically updated, thus you should take care of updating the array on your own.
-
-### Passing options object
-
-Pass the options with `sortablejsOptions` property. If we extend the example above with the options it will look like the following:
+Pass the options with `sortablejsOptions` property.
 
 ```typescript
 import { Component } from '@angular/core';
-import { SortablejsOptions } from 'angular-sortablejs';
 
 @Component({
     selector: 'my-app',
     template: `
       <h2>Drag / drop the item</h2>
-      <div [sortablejs]="items" [sortablejsOptions]="options">
+      <div [sortablejs]="items" [sortablejsOptions]="{ animation: 150 }">
         <div *ngFor="let item of items">{{ item }}</div>
       </div>
 
@@ -111,19 +102,56 @@ import { SortablejsOptions } from 'angular-sortablejs';
       <div>
         <div *ngFor="let item of items">{{ item }}</div>
       </div>
-    `,
-    directives: [ SORTABLEJS_DIRECTIVES ]
+    `
 })
 export class AppComponent {
    items = [1, 2, 3, 4, 5];
+}
+```
+
+### Drag & drop between two lists
+
+The only thing which should be done is assigning the `group` option to the both list. Everything else is handled automatically.
+
+```typescript
+import { Component } from '@angular/core';
+import { SortablejsOptions } from 'angular-sortablejs';
+
+@Component({
+    selector: 'my-app',
+    template: `
+    <h2>Drag / drop the item</h2>
+    <h3>list 1</h3>
+    <div class="items1" [sortablejs]="items1" [sortablejsOptions]="options">
+      <div *ngFor="let item of items1">{{ item }}</div>
+    </div>
+    <h3>list 2</h3>
+    <div class="items2" [sortablejs]="items2" [sortablejsOptions]="options">
+      <div *ngFor="let item of items2">{{ item }}</div>
+    </div>
+
+    <hr>
+
+    <h2>See the result</h2>
+    <div>
+      <h3>list 1</h3>
+      <div *ngFor="let item of items1">{{ item }}</div>
+      <h3>list 2</h3>
+      <div *ngFor="let item of items2">{{ item }}</div>
+    </div>
+    `
+})
+export class AppComponent {
+   items1 = [1, 2, 3, 4, 5];
+   items2 = ['a', 'b', 'c', 'd', 'e'];
 
    options: SortablejsOptions = {
-     animation: 150
+     group: 'test'
    };
 }
 ```
 
-### Global options configuration
+### Configure the options globally
 
 If you want to use the same sortable options across different places of your application you might want to set up global configuration. Add the following to your main module to enable e.g. `animation: 150` everywhere:
 
@@ -138,4 +166,12 @@ imports: [
 ]
 ```
 
-This value will be used as a default one, but it can be overriden by `sortablejsOptions` property.
+This value will be used as a default one, but it can be overwritten by a local `sortablejsOptions` property.
+
+## How it works
+
+The model is automatically updated because you pass the `items` as `<div [sortablejs]="items">`. The `items` variable can be either an ordinary JavaScript array or a reactive forms `FormArray`.
+
+If you won't pass anything, e.g. `<div sortablejs>`, the items won't be automatically updated, thus you should take care of updating the array on your own using standard `Sortable.js` events.
+
+Original events `onAdd`, `onRemove`, `onUpdate` are intercepted by the library in order to reflect the sortable changes into the data. If you will add your own event handlers (inside of the options object) they will be called right after the data binding is done. If you don't pass the data, e.g. `<div sortablejs>` the data binding is skipped and only your event handlers will be fired.

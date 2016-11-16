@@ -11,19 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var forms_1 = require('@angular/forms');
 var index_1 = require('../index');
+// Sortable
 var Sortable = require('sortablejs');
+// original library calls the events in unnatural order
+// first the item is added, then removed from the previous array
+// this is a temporary event to work this around
+// as long as only one sortable takes place at a certain time
+// this is enough to have a single `global` event
+var onremove;
 var SortablejsDirective = (function () {
     function SortablejsDirective(element) {
         this.element = element;
     }
-    SortablejsDirective.moveArrayItem = function (array, from, to) {
-        array.splice(to, 0, array.splice(from, 1)[0]);
-    };
-    SortablejsDirective.moveFormArrayItem = function (formArray, from, to) {
-        var relocated = formArray.at(from);
-        formArray.removeAt(from);
-        formArray.insert(to, relocated);
-    };
     SortablejsDirective.prototype.ngOnInit = function () {
         // onChange???
         this._sortable = new Sortable(this.element.nativeElement, this.options);
@@ -38,21 +37,50 @@ var SortablejsDirective = (function () {
         enumerable: true,
         configurable: true
     });
+    SortablejsDirective.prototype.proxyEvent = function (eventName) {
+        if (this._options && this._options[eventName]) {
+            this._options[eventName](event);
+        }
+    };
     Object.defineProperty(SortablejsDirective.prototype, "overridenOptions", {
         get: function () {
             var _this = this;
             if (this._items) {
                 return {
-                    onEnd: function (event) {
+                    onAdd: function (event) {
+                        onremove = function (item) {
+                            if (_this._items instanceof forms_1.FormArray) {
+                                _this._items.insert(event.newIndex, item);
+                            }
+                            else {
+                                _this._items.splice(event.newIndex, 0, item);
+                            }
+                        };
+                        _this.proxyEvent('onAdd');
+                    },
+                    onRemove: function (event) {
+                        var item;
                         if (_this._items instanceof forms_1.FormArray) {
-                            SortablejsDirective.moveFormArrayItem(_this._items, event.oldIndex, event.newIndex);
+                            item = _this._items.at(event.oldIndex);
+                            _this._items.removeAt(event.oldIndex);
                         }
                         else {
-                            SortablejsDirective.moveArrayItem(_this._items, event.oldIndex, event.newIndex);
+                            item = _this._items.splice(event.oldIndex, 1)[0];
                         }
-                        if (_this._options && _this._options.onEnd) {
-                            _this._options.onEnd(event);
+                        onremove(item);
+                        onremove = null;
+                        _this.proxyEvent('onRemove');
+                    },
+                    onUpdate: function (event) {
+                        if (_this._items instanceof forms_1.FormArray) {
+                            var relocated = _this._items.at(event.oldIndex);
+                            _this._items.removeAt(event.oldIndex);
+                            _this._items.insert(event.newIndex, relocated);
                         }
+                        else {
+                            _this._items.splice(event.newIndex, 0, _this._items.splice(event.oldIndex, 1)[0]);
+                        }
+                        _this.proxyEvent('onUpdate');
                     }
                 };
             }

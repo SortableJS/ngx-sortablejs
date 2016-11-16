@@ -1,6 +1,6 @@
 {
   "name": "angular-sortablejs",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "SortableJS for Angular 2+",
   "main": "index.js",
   "scripts": {
@@ -28,12 +28,11 @@
   },
   "homepage": "https://github.com/SortableJS/angular-sortablejs#readme",
   "dependencies": {
-    "@angular/common": "^2.0.0-rc.6",
-    "@angular/compiler": "^2.0.0-rc.6",
-    "@angular/core": "^2.0.0-rc.6",
-    "@angular/forms": "^2.0.0-rc.6",
+    "@angular/common": "^2.0.0",
+    "@angular/core": "^2.0.0",
+    "@angular/forms": "^2.0.0",
+    "rxjs": "^5.0.0-beta.12",
     "sortablejs": "^1.4.2",
-    "rxjs": "5.0.0-beta.11",
     "zone.js": "^0.6.17"
   },
   "devDependencies": {
@@ -46,7 +45,6 @@
     "typescript": "^2.0.0"
   },
   "pre-commit": [
-    "tslint",
-    "build"
+    "tslint"
   ]
 }
