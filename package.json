@@ -46,7 +46,6 @@
     "typescript": "^2.0.0"
   },
   "pre-commit": [
-    "tslint",
-    "build"
+    "tslint"
   ]
 }
