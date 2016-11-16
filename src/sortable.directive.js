@@ -37,7 +37,7 @@ var SortablejsDirective = (function () {
         enumerable: true,
         configurable: true
     });
-    SortablejsDirective.prototype.proxyEvent = function (eventName) {
+    SortablejsDirective.prototype.proxyEvent = function (eventName, event) {
         if (this._options && this._options[eventName]) {
             this._options[eventName](event);
         }
@@ -56,7 +56,7 @@ var SortablejsDirective = (function () {
                                 _this._items.splice(event.newIndex, 0, item);
                             }
                         };
-                        _this.proxyEvent('onAdd');
+                        _this.proxyEvent('onAdd', event);
                     },
                     onRemove: function (event) {
                         var item;
@@ -69,7 +69,7 @@ var SortablejsDirective = (function () {
                         }
                         onremove(item);
                         onremove = null;
-                        _this.proxyEvent('onRemove');
+                        _this.proxyEvent('onRemove', event);
                     },
                     onUpdate: function (event) {
                         if (_this._items instanceof forms_1.FormArray) {
@@ -80,7 +80,7 @@ var SortablejsDirective = (function () {
                         else {
                             _this._items.splice(event.newIndex, 0, _this._items.splice(event.oldIndex, 1)[0]);
                         }
-                        _this.proxyEvent('onUpdate');
+                        _this.proxyEvent('onUpdate', event);
                     }
                 };
             }

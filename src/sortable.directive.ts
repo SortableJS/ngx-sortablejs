@@ -41,7 +41,7 @@ export class SortablejsDirective implements OnInit, OnDestroy {
     return Object.assign({}, SortablejsModule._globalOptions, this._options, this.overridenOptions);
   }
 
-  private proxyEvent(eventName: string) {
+  private proxyEvent(eventName: string, event: SortableEvent) {
     if (this._options && this._options[eventName]) {
       this._options[eventName](event);
     }
@@ -59,7 +59,7 @@ export class SortablejsDirective implements OnInit, OnDestroy {
             }
           };
 
-          this.proxyEvent('onAdd');
+          this.proxyEvent('onAdd', event);
         },
         onRemove: (event: SortableEvent) => {
           let item: any;
@@ -73,7 +73,7 @@ export class SortablejsDirective implements OnInit, OnDestroy {
 
           onremove(item);
           onremove = null;
-          this.proxyEvent('onRemove');
+          this.proxyEvent('onRemove', event);
         },
         onUpdate: (event: SortableEvent) => {
           if (this._items instanceof FormArray) {
@@ -85,7 +85,7 @@ export class SortablejsDirective implements OnInit, OnDestroy {
             this._items.splice(event.newIndex, 0, this._items.splice(event.oldIndex, 1)[0]);
           }
 
-          this.proxyEvent('onUpdate');
+          this.proxyEvent('onUpdate', event);
         }
       };
     }
