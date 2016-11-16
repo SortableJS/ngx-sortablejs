@@ -11,7 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var forms_1 = require('@angular/forms');
 var index_1 = require('../index');
+// Sortable
 var Sortable = require('sortablejs');
+// original library calls the events in unnatural order
+// first the item is added, then removed from the previous array
+// this is a temporary event to work this around
+// as long as only one sortable takes place at a certain time
+// this is enough to have a single `global` event
+var onremove;
 var SortablejsDirective = (function () {
     function SortablejsDirective(element) {
         this.element = element;
@@ -39,13 +46,9 @@ var SortablejsDirective = (function () {
         get: function () {
             var _this = this;
             if (this._items) {
-                // original library calls the events in unnatural order
-                // first the item is added, then removed from the previous array
-                // this is a temporary event to work this around
-                var onremove_1;
                 return {
                     onAdd: function (event) {
-                        onremove_1 = function (item) {
+                        onremove = function (item) {
                             if (_this._items instanceof forms_1.FormArray) {
                                 _this._items.insert(event.newIndex, item);
                             }
@@ -64,8 +67,8 @@ var SortablejsDirective = (function () {
                         else {
                             item = _this._items.splice(event.oldIndex, 1)[0];
                         }
-                        onremove_1(item);
-                        onremove_1 = null;
+                        onremove(item);
+                        onremove = null;
                         _this.proxyEvent('onRemove');
                     },
                     onUpdate: function (event) {
