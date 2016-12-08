@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { SortablejsOptions } from '../index.d';
 import { SortablejsModule } from '../index';
@@ -26,11 +26,19 @@ export class SortablejsDirective implements OnInit, OnDestroy {
 
   private _sortable: any;
 
-  constructor(private element: ElementRef) {}
+  @Input() runInsideAngular: boolean = false;
+
+  constructor(private element: ElementRef, private zone: NgZone) {}
 
   public ngOnInit() {
     // onChange???
-    this._sortable = new Sortable(this.element.nativeElement, this.options);
+    if (this.runInsideAngular) {
+      this._sortable = new Sortable(this.element.nativeElement, this.options);
+    } else {
+      this.zone.runOutsideAngular(() => {
+        this._sortable = new Sortable(this.element.nativeElement, this.options);
+      });
+    }
   }
 
   public ngOnDestroy() {
