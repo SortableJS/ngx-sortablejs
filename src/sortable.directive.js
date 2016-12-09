@@ -20,12 +20,22 @@ var Sortable = require('sortablejs');
 // this is enough to have a single `global` event
 var onremove;
 var SortablejsDirective = (function () {
-    function SortablejsDirective(element) {
+    function SortablejsDirective(element, zone) {
         this.element = element;
+        this.zone = zone;
+        this.runInsideAngular = false;
     }
     SortablejsDirective.prototype.ngOnInit = function () {
+        var _this = this;
         // onChange???
-        this._sortable = new Sortable(this.element.nativeElement, this.options);
+        if (this.runInsideAngular) {
+            this._sortable = new Sortable(this.element.nativeElement, this.options);
+        }
+        else {
+            this.zone.runOutsideAngular(function () {
+                _this._sortable = new Sortable(_this.element.nativeElement, _this.options);
+            });
+        }
     };
     SortablejsDirective.prototype.ngOnDestroy = function () {
         this._sortable.destroy();
@@ -97,11 +107,15 @@ var SortablejsDirective = (function () {
         core_1.Input('sortablejsOptions'), 
         __metadata('design:type', Object)
     ], SortablejsDirective.prototype, "_options", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], SortablejsDirective.prototype, "runInsideAngular", void 0);
     SortablejsDirective = __decorate([
         core_1.Directive({
             selector: '[sortablejs]'
         }), 
-        __metadata('design:paramtypes', [core_1.ElementRef])
+        __metadata('design:paramtypes', [core_1.ElementRef, core_1.NgZone])
     ], SortablejsDirective);
     return SortablejsDirective;
 }());
