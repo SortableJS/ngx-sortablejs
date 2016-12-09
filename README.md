@@ -150,6 +150,12 @@ export class AppComponent {
    };
 }
 ```
+### Bind events inside Angular zone
+
+By default, the boolean parameter **runInsideAngular** is set to **false**. 
+This means that the initial binding of all mouse events of the component will be set so that they **will not** trigger Angular's change detection. 
+
+If this parameter is set to true, then for large components - with a lot of data bindings - the UI will function in a staggered and lagging way (mainly when dragging items), while every event will trigger the change detection (which might be needed in some special edge cases).
 
 ### Configure the options globally
 
