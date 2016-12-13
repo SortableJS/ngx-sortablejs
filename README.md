@@ -109,6 +109,11 @@ export class AppComponent {
 }
 ```
 
+### Updating the options
+
+You can pass a new options object at anytime via the `[sortablejsOptions]` binding and the Angular's change detection will check for the changes from the previous options and will call the low level option setter from [Sortable.js](https://github.com/RubaXa/Sortable) to set the new option values.
+> Note: It will only detect changes when a brand new options object is passed, not deep changes.
+
 ### Drag & drop between two lists
 
 The only thing which should be done is assigning the `group` option to the both list. Everything else is handled automatically.
