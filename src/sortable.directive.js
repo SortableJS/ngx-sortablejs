@@ -8,9 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var forms_1 = require('@angular/forms');
-var index_1 = require('../index');
+var core_1 = require("@angular/core");
+var forms_1 = require("@angular/forms");
+var index_1 = require("../index");
 // Sortable
 var Sortable = require('sortablejs');
 // original library calls the events in unnatural order
@@ -34,6 +34,20 @@ var SortablejsDirective = (function () {
         else {
             this.zone.runOutsideAngular(function () {
                 _this._sortable = new Sortable(_this.element.nativeElement, _this.options);
+            });
+        }
+    };
+    SortablejsDirective.prototype.ngOnChanges = function (changes) {
+        var _this = this;
+        var optionsChange = changes['_options'];
+        if (optionsChange && !optionsChange.isFirstChange()) {
+            var previousOptions_1 = optionsChange.previousValue;
+            var currentOptions_1 = optionsChange.currentValue;
+            Object.keys(currentOptions_1).forEach(function (optionName) {
+                if (currentOptions_1[optionName] !== previousOptions_1[optionName]) {
+                    // use low-level option setter
+                    _this._sortable.option(optionName, currentOptions_1[optionName]);
+                }
             });
         }
     };
@@ -99,25 +113,25 @@ var SortablejsDirective = (function () {
         enumerable: true,
         configurable: true
     });
-    __decorate([
-        core_1.Input('sortablejs'), 
-        __metadata('design:type', Object)
-    ], SortablejsDirective.prototype, "_items", void 0);
-    __decorate([
-        core_1.Input('sortablejsOptions'), 
-        __metadata('design:type', Object)
-    ], SortablejsDirective.prototype, "_options", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Boolean)
-    ], SortablejsDirective.prototype, "runInsideAngular", void 0);
-    SortablejsDirective = __decorate([
-        core_1.Directive({
-            selector: '[sortablejs]'
-        }), 
-        __metadata('design:paramtypes', [core_1.ElementRef, core_1.NgZone])
-    ], SortablejsDirective);
     return SortablejsDirective;
 }());
+__decorate([
+    core_1.Input('sortablejs'),
+    __metadata("design:type", Object)
+], SortablejsDirective.prototype, "_items", void 0);
+__decorate([
+    core_1.Input('sortablejsOptions'),
+    __metadata("design:type", Object)
+], SortablejsDirective.prototype, "_options", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean)
+], SortablejsDirective.prototype, "runInsideAngular", void 0);
+SortablejsDirective = __decorate([
+    core_1.Directive({
+        selector: '[sortablejs]'
+    }),
+    __metadata("design:paramtypes", [core_1.ElementRef, core_1.NgZone])
+], SortablejsDirective);
 exports.SortablejsDirective = SortablejsDirective;
 //# sourceMappingURL=sortable.directive.js.map
