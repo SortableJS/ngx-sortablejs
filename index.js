@@ -8,27 +8,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var common_1 = require("@angular/common");
-var sortable_directive_1 = require("./src/sortable.directive");
-var SortablejsModule = SortablejsModule_1 = (function () {
+var core_1 = require('@angular/core');
+var common_1 = require('@angular/common');
+var sortable_directive_1 = require('./src/sortable.directive');
+var SortablejsModule = (function () {
     function SortablejsModule() {
     }
     SortablejsModule.forRoot = function (globalOptions) {
-        SortablejsModule_1._globalOptions = globalOptions;
-        return SortablejsModule_1;
+        SortablejsModule._globalOptions = globalOptions;
+        return SortablejsModule;
     };
+    SortablejsModule._globalOptions = {};
+    SortablejsModule = __decorate([
+        core_1.NgModule({
+            declarations: [sortable_directive_1.SortablejsDirective],
+            imports: [common_1.CommonModule],
+            exports: [sortable_directive_1.SortablejsDirective]
+        }), 
+        __metadata('design:paramtypes', [])
+    ], SortablejsModule);
     return SortablejsModule;
 }());
-SortablejsModule._globalOptions = {};
-SortablejsModule = SortablejsModule_1 = __decorate([
-    core_1.NgModule({
-        declarations: [sortable_directive_1.SortablejsDirective],
-        imports: [common_1.CommonModule],
-        exports: [sortable_directive_1.SortablejsDirective]
-    }),
-    __metadata("design:paramtypes", [])
-], SortablejsModule);
 exports.SortablejsModule = SortablejsModule;
-var SortablejsModule_1;
 //# sourceMappingURL=index.js.map
