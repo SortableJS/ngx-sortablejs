@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnChanges, OnDestroy, NgZone, SimpleChanges, SimpleChange } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { SortablejsOptions } from '../index.d';
 import { SortablejsModule } from '../index';
@@ -16,7 +16,7 @@ let onremove: (item: any) => void;
 @Directive({
   selector: '[sortablejs]'
 })
-export class SortablejsDirective implements OnInit, OnDestroy {
+export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
   @Input('sortablejs')
   private _items: any[] | FormArray;
@@ -37,6 +37,20 @@ export class SortablejsDirective implements OnInit, OnDestroy {
     } else {
       this.zone.runOutsideAngular(() => {
         this._sortable = new Sortable(this.element.nativeElement, this.options);
+      });
+    }
+  }
+
+  public ngOnChanges(changes: SimpleChanges) {
+    const optionsChange: SimpleChange = changes['_options'];
+    if (optionsChange && !optionsChange.isFirstChange()) {
+      const previousOptions: SortablejsOptions = optionsChange.previousValue;
+      const currentOptions: SortablejsOptions = optionsChange.currentValue;
+      Object.keys(currentOptions).forEach(optionName => {
+        if (currentOptions[optionName] !== previousOptions[optionName]) {
+          // use low-level option setter
+          this._sortable.option(optionName, currentOptions[optionName]);
+        }
       });
     }
   }
