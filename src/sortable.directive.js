@@ -8,9 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var forms_1 = require('@angular/forms');
-var index_1 = require('../index');
+var core_1 = require("@angular/core");
+var forms_1 = require("@angular/forms");
+var index_1 = require("../index");
 // Sortable
 var Sortable = require('sortablejs');
 // original library calls the events in unnatural order
@@ -27,7 +27,6 @@ var SortablejsDirective = (function () {
     }
     SortablejsDirective.prototype.ngOnInit = function () {
         var _this = this;
-        // onChange???
         if (this.runInsideAngular) {
             this._sortable = new Sortable(this.element.nativeElement, this.options);
         }
@@ -66,12 +65,22 @@ var SortablejsDirective = (function () {
             this._options[eventName](event);
         }
     };
+    Object.defineProperty(SortablejsDirective.prototype, "bindingEnabled", {
+        // returns whether the items are currently set
+        get: function () {
+            return !!this._items;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(SortablejsDirective.prototype, "overridenOptions", {
         get: function () {
             var _this = this;
-            if (this._items) {
-                return {
-                    onAdd: function (event) {
+            // always intercept standard events but act only in case _items are set (bindingEnabled)
+            // allows to forget about tracking this._items changes
+            return {
+                onAdd: function (event) {
+                    if (_this.bindingEnabled) {
                         onremove = function (item) {
                             if (_this._items instanceof forms_1.FormArray) {
                                 _this._items.insert(event.newIndex, item);
@@ -80,10 +89,12 @@ var SortablejsDirective = (function () {
                                 _this._items.splice(event.newIndex, 0, item);
                             }
                         };
-                        _this.proxyEvent('onAdd', event);
-                    },
-                    onRemove: function (event) {
-                        var item;
+                    }
+                    _this.proxyEvent('onAdd', event);
+                },
+                onRemove: function (event) {
+                    if (_this.bindingEnabled) {
+                        var item = void 0;
                         if (_this._items instanceof forms_1.FormArray) {
                             item = _this._items.at(event.oldIndex);
                             _this._items.removeAt(event.oldIndex);
@@ -93,9 +104,11 @@ var SortablejsDirective = (function () {
                         }
                         onremove(item);
                         onremove = null;
-                        _this.proxyEvent('onRemove', event);
-                    },
-                    onUpdate: function (event) {
+                    }
+                    _this.proxyEvent('onRemove', event);
+                },
+                onUpdate: function (event) {
+                    if (_this.bindingEnabled) {
                         if (_this._items instanceof forms_1.FormArray) {
                             var relocated = _this._items.at(event.oldIndex);
                             _this._items.removeAt(event.oldIndex);
@@ -104,34 +117,33 @@ var SortablejsDirective = (function () {
                         else {
                             _this._items.splice(event.newIndex, 0, _this._items.splice(event.oldIndex, 1)[0]);
                         }
-                        _this.proxyEvent('onUpdate', event);
                     }
-                };
-            }
-            return {};
+                    _this.proxyEvent('onUpdate', event);
+                }
+            };
         },
         enumerable: true,
         configurable: true
     });
-    __decorate([
-        core_1.Input('sortablejs'), 
-        __metadata('design:type', Object)
-    ], SortablejsDirective.prototype, "_items", void 0);
-    __decorate([
-        core_1.Input('sortablejsOptions'), 
-        __metadata('design:type', Object)
-    ], SortablejsDirective.prototype, "_options", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Boolean)
-    ], SortablejsDirective.prototype, "runInsideAngular", void 0);
-    SortablejsDirective = __decorate([
-        core_1.Directive({
-            selector: '[sortablejs]'
-        }), 
-        __metadata('design:paramtypes', [core_1.ElementRef, core_1.NgZone])
-    ], SortablejsDirective);
     return SortablejsDirective;
 }());
+__decorate([
+    core_1.Input('sortablejs'),
+    __metadata("design:type", Object)
+], SortablejsDirective.prototype, "_items", void 0);
+__decorate([
+    core_1.Input('sortablejsOptions'),
+    __metadata("design:type", Object)
+], SortablejsDirective.prototype, "_options", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean)
+], SortablejsDirective.prototype, "runInsideAngular", void 0);
+SortablejsDirective = __decorate([
+    core_1.Directive({
+        selector: '[sortablejs]'
+    }),
+    __metadata("design:paramtypes", [core_1.ElementRef, core_1.NgZone])
+], SortablejsDirective);
 exports.SortablejsDirective = SortablejsDirective;
 //# sourceMappingURL=sortable.directive.js.map

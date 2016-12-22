@@ -31,7 +31,6 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   constructor(private element: ElementRef, private zone: NgZone) {}
 
   public ngOnInit() {
-    // onChange???
     if (this.runInsideAngular) {
       this._sortable = new Sortable(this.element.nativeElement, this.options);
     } else {
@@ -69,10 +68,17 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  // returns whether the items are currently set
+  private get bindingEnabled() {
+    return !!this._items;
+  }
+
   private get overridenOptions(): SortablejsOptions {
-    if (this._items) {
-      return {
-        onAdd: (event: SortableEvent) => {
+    // always intercept standard events but act only in case _items are set (bindingEnabled)
+    // allows to forget about tracking this._items changes
+    return {
+      onAdd: (event: SortableEvent) => {
+        if (this.bindingEnabled) {
           onremove = (item: any) => {
             if (this._items instanceof FormArray) {
                 this._items.insert(event.newIndex, item);
@@ -80,10 +86,12 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
                 this._items.splice(event.newIndex, 0, item);
             }
           };
+        }
 
-          this.proxyEvent('onAdd', event);
-        },
-        onRemove: (event: SortableEvent) => {
+        this.proxyEvent('onAdd', event);
+      },
+      onRemove: (event: SortableEvent) => {
+        if (this.bindingEnabled) {
           let item: any;
 
           if (this._items instanceof FormArray) {
@@ -95,9 +103,12 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
           onremove(item);
           onremove = null;
-          this.proxyEvent('onRemove', event);
-        },
-        onUpdate: (event: SortableEvent) => {
+        }
+
+        this.proxyEvent('onRemove', event);
+      },
+      onUpdate: (event: SortableEvent) => {
+        if (this.bindingEnabled) {
           if (this._items instanceof FormArray) {
             let relocated = this._items.at(event.oldIndex);
 
@@ -106,13 +117,11 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
           } else {
             this._items.splice(event.newIndex, 0, this._items.splice(event.oldIndex, 1)[0]);
           }
-
-          this.proxyEvent('onUpdate', event);
         }
-      };
-    }
 
-    return {};
+        this.proxyEvent('onUpdate', event);
+      }
+    };
   }
 
 }
