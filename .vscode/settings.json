@@ -1,0 +1,10 @@
+{
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/*.bak": true,
+    "**/*.tgz": true
+  },
+
+  "typescript.tsdk": "./node_modules/typescript/lib"
+}

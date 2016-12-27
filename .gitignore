@@ -1,3 +1,6 @@
 node_modules
-typings
+dist
+codegen
 npm-debug.log
+*.bak
+*.tgz

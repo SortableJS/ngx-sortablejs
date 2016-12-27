@@ -1,7 +1,6 @@
 import { Directive, ElementRef, Input, OnInit, OnChanges, OnDestroy, NgZone, SimpleChanges, SimpleChange } from '@angular/core';
 import { FormArray } from '@angular/forms';
-import { SortablejsOptions } from '../index.d';
-import { SortablejsModule } from '../index';
+import { SortablejsModule, SortablejsOptions } from '../index';
 
 // Sortable
 let Sortable = require('sortablejs');
@@ -19,10 +18,10 @@ let onremove: (item: any) => void;
 export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
   @Input('sortablejs')
-  private _items: any[] | FormArray;
+  items: any[] | FormArray;
 
   @Input('sortablejsOptions')
-  private _options: SortablejsOptions;
+  inputOptions: SortablejsOptions;
 
   private _sortable: any;
 
@@ -41,7 +40,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    const optionsChange: SimpleChange = changes['_options'];
+    const optionsChange: SimpleChange = changes['inputOptions'];
     if (optionsChange && !optionsChange.isFirstChange()) {
       const previousOptions: SortablejsOptions = optionsChange.previousValue;
       const currentOptions: SortablejsOptions = optionsChange.currentValue;
@@ -59,31 +58,31 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   private get options() {
-    return Object.assign({}, SortablejsModule._globalOptions, this._options, this.overridenOptions);
+    return Object.assign({}, SortablejsModule._globalOptions, this.inputOptions, this.overridenOptions);
   }
 
   private proxyEvent(eventName: string, event: SortableEvent) {
-    if (this._options && this._options[eventName]) {
-      this._options[eventName](event);
+    if (this.inputOptions && this.inputOptions[eventName]) {
+      this.inputOptions[eventName](event);
     }
   }
 
   // returns whether the items are currently set
   private get bindingEnabled() {
-    return !!this._items;
+    return !!this.items;
   }
 
   private get overridenOptions(): SortablejsOptions {
-    // always intercept standard events but act only in case _items are set (bindingEnabled)
-    // allows to forget about tracking this._items changes
+    // always intercept standard events but act only in case items are set (bindingEnabled)
+    // allows to forget about tracking this.items changes
     return {
       onAdd: (event: SortableEvent) => {
         if (this.bindingEnabled) {
           onremove = (item: any) => {
-            if (this._items instanceof FormArray) {
-                this._items.insert(event.newIndex, item);
+            if (this.items instanceof FormArray) {
+                this.items.insert(event.newIndex, item);
             } else {
-                this._items.splice(event.newIndex, 0, item);
+                this.items.splice(event.newIndex, 0, item);
             }
           };
         }
@@ -94,11 +93,11 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
         if (this.bindingEnabled) {
           let item: any;
 
-          if (this._items instanceof FormArray) {
-              item = this._items.at(event.oldIndex);
-              this._items.removeAt(event.oldIndex);
+          if (this.items instanceof FormArray) {
+              item = this.items.at(event.oldIndex);
+              this.items.removeAt(event.oldIndex);
           } else {
-              item = this._items.splice(event.oldIndex, 1)[0];
+              item = this.items.splice(event.oldIndex, 1)[0];
           }
 
           onremove(item);
@@ -109,13 +108,13 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
       },
       onUpdate: (event: SortableEvent) => {
         if (this.bindingEnabled) {
-          if (this._items instanceof FormArray) {
-            let relocated = this._items.at(event.oldIndex);
+          if (this.items instanceof FormArray) {
+            let relocated = this.items.at(event.oldIndex);
 
-            this._items.removeAt(event.oldIndex);
-            this._items.insert(event.newIndex, relocated);
+            this.items.removeAt(event.oldIndex);
+            this.items.insert(event.newIndex, relocated);
           } else {
-            this._items.splice(event.newIndex, 0, this._items.splice(event.oldIndex, 1)[0]);
+            this.items.splice(event.newIndex, 0, this.items.splice(event.oldIndex, 1)[0]);
           }
         }
 
