@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "es2015",
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
@@ -29,5 +29,8 @@
   "exclude": [
     "node_modules/",
     "dist/"
-  ]
+  ],
+  "angularCompilerOptions": {
+   "genDir": "codegen"
+  }
 }

@@ -1,10 +1,16 @@
 {
   "name": "angular-sortablejs",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "SortableJS for Angular 2+",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "typings": "./dist/index",
   "scripts": {
+    "clean": "rimraf ./dist/* ./codegen/*",
     "build": "tsc",
+    "prebuild": "npm run clean",
+    "build-dist": "ngc -p tsconfig-dist.json",
+    "prebuild-dist": "npm run clean",
+    "prepublish": "npm run tslint && npm run build-dist",
     "tslint": "tslint ./app/**/*.ts -t verbose"
   },
   "repository": {
@@ -28,12 +34,14 @@
   },
   "homepage": "https://github.com/SortableJS/angular-sortablejs#readme",
   "dependencies": {
-    "@angular/common": "^2.0.0",
-    "@angular/core": "^2.0.0",
-    "@angular/forms": "^2.0.0",
-    "rxjs": "^5.0.0-beta.12",
+    "@angular/common": "2.1.0",
+    "@angular/compiler": "2.1.0",
+    "@angular/compiler-cli": "2.1.0",
+    "@angular/core": "2.1.0",
+    "@angular/forms": "2.1.0",
+    "rxjs": "5.0.2",
     "sortablejs": "^1.4.2",
-    "zone.js": "^0.6.17"
+    "zone.js": "0.6.17"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.32",
@@ -41,9 +49,13 @@
     "@types/sortablejs": "^1.3.29",
     "@types/systemjs": "^0.19.30",
     "git-validate": "^2.1.4",
+    "rimraf": "^2.5.2",
     "tslint": "^3.13.0",
-    "typescript": "^2.0.0"
+    "typescript": "2.0.3"
   },
+  "files": [
+    "dist/"
+  ],
   "pre-commit": [
     "tslint"
   ]
