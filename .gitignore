@@ -4,3 +4,5 @@ codegen
 npm-debug.log
 *.bak
 *.tgz
+*.iml
+*.idea
