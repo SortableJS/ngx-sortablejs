@@ -1,6 +1,7 @@
 import { Directive, ElementRef, Input, OnInit, OnChanges, OnDestroy, NgZone, SimpleChanges, SimpleChange } from '@angular/core';
 import { FormArray } from '@angular/forms';
-import { SortablejsModule, SortablejsOptions } from '../index';
+import { SortablejsOptions } from './sortablejs-options';
+import { SortablejsModule } from './sortablejs.module';
 
 // Sortable
 let Sortable = require('sortablejs');
