@@ -34,11 +34,11 @@
   },
   "homepage": "https://github.com/SortableJS/angular-sortablejs#readme",
   "dependencies": {
-    "@angular/core": "^2.0.0",
-    "@angular/forms": "^2.0.0",
     "sortablejs": "^1.4.2"
   },
   "devDependencies": {
+    "@angular/core": "^2.0.0",
+    "@angular/forms": "^2.0.0",
     "@angular/compiler": "^2.1.0",
     "@angular/compiler-cli": "^2.1.0",
     "@types/core-js": "^0.9.32",
@@ -50,6 +50,10 @@
     "rxjs": "^5.0.2",
     "tslint": "^3.13.0",
     "typescript": "2.0.3"
+  },
+  "peerDependencies": {
+    "@angular/core": "^2.0.0",
+    "@angular/forms": "^2.0.0"
   },
   "files": [
     "dist/"
