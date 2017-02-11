@@ -38,7 +38,6 @@
   },
   "devDependencies": {
     "@angular/core": "^2.0.0",
-    "@angular/forms": "^2.0.0",
     "@angular/compiler": "^2.1.0",
     "@angular/compiler-cli": "^2.1.0",
     "@types/core-js": "^0.9.32",
@@ -52,8 +51,7 @@
     "typescript": "2.0.3"
   },
   "peerDependencies": {
-    "@angular/core": "^2.0.0",
-    "@angular/forms": "^2.0.0"
+    "@angular/core": "^2.0.0"
   },
   "files": [
     "dist/"
