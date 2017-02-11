@@ -1,6 +1,6 @@
 {
   "name": "angular-sortablejs",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "SortableJS for Angular 2+",
   "main": "./dist/index.js",
   "typings": "./dist/index",
