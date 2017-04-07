@@ -9,7 +9,7 @@
     "skipDefaultLibCheck": true,
     "preserveConstEnums": true,
     "removeComments": false,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
     "strictNullChecks": false,
     "allowSyntheticDefaultImports": true,
