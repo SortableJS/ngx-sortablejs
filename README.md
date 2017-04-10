@@ -1,11 +1,11 @@
-# angular-sortablejs
+# ap-angular-sortablejs
 
 This package is an Angular 2 binding for [Sortable.js](https://github.com/RubaXa/Sortable). Supports standard arrays and Angular `FormArray`.
 
 ## Installation
 
 ```sh
-npm install --save angular-sortablejs
+npm install --save ap-angular-sortablejs
 ```
 
 ### Webpack configuration
@@ -20,14 +20,14 @@ Adapt your `systemjs.config.js` (or another place where you configure SystemJS) 
 ...
 var map = {
   ...
-  'angular-sortablejs': 'node_modules/angular-sortablejs/dist/',
+  'ap-angular-sortablejs': 'node_modules/ap-angular-sortablejs/dist/',
   'sortablejs': 'node_modules/sortablejs/Sortable.js',
   ...
 };
 ...
 var packages = {
   ...
-  'angular-sortablejs': { main: 'index.js', defaultExtension: 'js' },
+  'ap-angular-sortablejs': { main: 'index.js', defaultExtension: 'js' },
   ...
 };
 ...
@@ -120,7 +120,7 @@ The only thing which should be done is assigning the `group` option to the both 
 
 ```typescript
 import { Component } from '@angular/core';
-import { SortablejsOptions } from 'angular-sortablejs';
+import { SortablejsOptions } from 'ap-angular-sortablejs';
 
 @Component({
     selector: 'my-app',
@@ -157,8 +157,8 @@ export class AppComponent {
 ```
 ### Bind events inside Angular zone
 
-By default, the boolean parameter **runInsideAngular** is set to **false**. 
-This means that the initial binding of all mouse events of the component will be set so that they **will not** trigger Angular's change detection. 
+By default, the boolean parameter **runInsideAngular** is set to **false**.
+This means that the initial binding of all mouse events of the component will be set so that they **will not** trigger Angular's change detection.
 
 If this parameter is set to true, then for large components - with a lot of data bindings - the UI will function in a staggered and lagging way (mainly when dragging items), while every event will trigger the change detection (which might be needed in some special edge cases).
 

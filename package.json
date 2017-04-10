@@ -1,6 +1,6 @@
 {
-  "name": "angular-sortablejs",
-  "version": "1.3.3",
+  "name": "ap-angular-sortablejs",
+  "version": "1.3.4",
   "description": "SortableJS for Angular 2+",
   "main": "./dist/index.js",
   "typings": "./dist/index",
@@ -15,13 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SortableJS/angular-sortablejs.git"
+    "url": "git+https://github.com/lbertenasco/ap-angular-sortablejs.git"
   },
   "keywords": [
     "angular2-sortable",
     "angular2-sortablejs",
     "angular-sortable",
     "angular-sortablejs",
+    "ap-angular-sortablejs",
     "ng2-sortable",
     "ng2-sortablejs",
     "ng-sortable",
@@ -30,9 +31,9 @@
   "author": "smnbbrv",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SortableJS/angular-sortablejs/issues"
+    "url": "https://github.com/lbertenasco/ap-angular-sortablejs/issues"
   },
-  "homepage": "https://github.com/SortableJS/angular-sortablejs#readme",
+  "homepage": "https://github.com/lbertenasco/ap-angular-sortablejs#readme",
   "dependencies": {
     "sortablejs": "1.5.1"
   },
