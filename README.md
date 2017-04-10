@@ -1,11 +1,11 @@
-# ap-angular-sortablejs
+# angular-sortablejs
 
 This package is an Angular 2 binding for [Sortable.js](https://github.com/RubaXa/Sortable). Supports standard arrays and Angular `FormArray`.
 
 ## Installation
 
 ```sh
-npm install --save ap-angular-sortablejs
+npm install --save angular-sortablejs
 ```
 
 ### Webpack configuration
@@ -20,14 +20,14 @@ Adapt your `systemjs.config.js` (or another place where you configure SystemJS) 
 ...
 var map = {
   ...
-  'ap-angular-sortablejs': 'node_modules/ap-angular-sortablejs/dist/',
+  'angular-sortablejs': 'node_modules/angular-sortablejs/dist/',
   'sortablejs': 'node_modules/sortablejs/Sortable.js',
   ...
 };
 ...
 var packages = {
   ...
-  'ap-angular-sortablejs': { main: 'index.js', defaultExtension: 'js' },
+  'angular-sortablejs': { main: 'index.js', defaultExtension: 'js' },
   ...
 };
 ...
@@ -120,7 +120,7 @@ The only thing which should be done is assigning the `group` option to the both 
 
 ```typescript
 import { Component } from '@angular/core';
-import { SortablejsOptions } from 'ap-angular-sortablejs';
+import { SortablejsOptions } from 'angular-sortablejs';
 
 @Component({
     selector: 'my-app',
