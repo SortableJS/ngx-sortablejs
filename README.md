@@ -117,6 +117,38 @@ export class AppComponent {
 }
 ```
 
+### Tracking lists update events
+
+You can use the options' `onUpdate` method to track the changes (see also *Passing the options* section):
+
+```ts
+constructor() {
+  this.options = {
+    onUpdate: (event: any) => {
+      this.postChangesToServer();
+    }
+  };
+}
+```
+
+If you use FormArray you are able to choose a more elegant solution:
+
+```ts
+public items = new FormArray([
+  new FormControl(1),
+  new FormControl(2),
+  new FormControl(3),
+]);
+
+constructor() {
+  this.items.valueChanges.subscribe(() => {
+    this.postChangesToServer(this.items.value);
+  });
+}
+```
+
+but note, that here you will be able to take the whole changed array only (no oldIndex / newIndex).
+
 ### Updating the options
 
 You can pass a new options object at anytime via the `[sortablejsOptions]` binding and the Angular's change detection will check for the changes from the previous options and will call the low level option setter from [Sortable.js](https://github.com/RubaXa/Sortable) to set the new option values.
