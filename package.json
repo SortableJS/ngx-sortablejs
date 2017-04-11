@@ -1,7 +1,7 @@
 {
   "name": "angular-sortablejs",
   "version": "1.3.3",
-  "description": "SortableJS for Angular 2+",
+  "description": "SortableJS for Angular",
   "main": "./dist/index.js",
   "typings": "./dist/index",
   "scripts": {
@@ -33,10 +33,8 @@
     "url": "https://github.com/SortableJS/angular-sortablejs/issues"
   },
   "homepage": "https://github.com/SortableJS/angular-sortablejs#readme",
-  "dependencies": {
-    "sortablejs": "1.5.1"
-  },
   "devDependencies": {
+    "sortablejs": "^1.5.1",
     "@angular/compiler": "4.0.1",
     "@angular/compiler-cli": "4.0.1",
     "@angular/core": "4.0.1",
@@ -50,7 +48,8 @@
     "typescript": "2.2.2"
   },
   "peerDependencies": {
-    "@angular/core": "4.0.1"
+    "sortablejs": "^1.5.1",
+    "@angular/core": "^4.0.0"
   },
   "files": [
     "dist/"
