@@ -1,5 +1,6 @@
 import { Directive, ElementRef, Input, OnInit, OnChanges, OnDestroy, NgZone, SimpleChanges, SimpleChange } from '@angular/core';
 import { SortablejsOptions } from './sortablejs-options';
+import { SortablejsService } from './sortablejs.service';
 import { SortablejsModule } from './sortablejs.module';
 
 import * as Sortable from 'sortablejs/Sortable.min';
@@ -17,16 +18,12 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   inputOptions: SortablejsOptions;
 
   private _sortable: any;
-  // original library calls the events in unnatural order
-  // first the item is added, then removed from the previous array
-  // this is a temporary event to work this around
-  // as long as only one sortable takes place at a certain time
-  // this is enough to have a single `global` event
-  private onremove: (item: any) => void;
 
   @Input() runInsideAngular: boolean = false;
 
-  constructor(private element: ElementRef, private zone: NgZone) {}
+  constructor(private sortablejsService: SortablejsService,
+              private element: ElementRef,
+              private zone: NgZone) {}
 
   public ngOnInit() {
     if (this.runInsideAngular) {
@@ -83,8 +80,8 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     // allows to forget about tracking this.items changes
     return {
       onAdd: (event: SortableEvent) => {
-        if (!this.inputOptions.disableBinding && this.bindingEnabled) {
-          this.onremove = (item: any) => {
+        if (this.bindingEnabled) {
+          this.sortablejsService.onremove = (item: any) => {
             if (this.isItemsFormArray) {
                 this.items.insert(event.newIndex, item);
             } else {
@@ -96,7 +93,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
         this.proxyEvent('onAdd', event);
       },
       onRemove: (event: SortableEvent) => {
-        if (!this.inputOptions.disableBinding && this.bindingEnabled) {
+        if (this.bindingEnabled) {
           let item: any;
 
           if (this.isItemsFormArray) {
@@ -106,14 +103,14 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
               item = this.items.splice(event.oldIndex, 1)[0];
           }
 
-          this.onremove(item);
-          this.onremove = null;
+          this.sortablejsService.onremove(item);
+          this.sortablejsService.onremove = null;
         }
 
         this.proxyEvent('onRemove', event);
       },
       onUpdate: (event: SortableEvent) => {
-        if (!this.inputOptions.disableBinding && this.bindingEnabled) {
+        if (this.bindingEnabled) {
           if (this.isItemsFormArray) {
             let relocated = this.items.at(event.oldIndex);
 
