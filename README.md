@@ -4,8 +4,16 @@ This package is an Angular 2 binding for [Sortable.js](https://github.com/RubaXa
 
 ## Installation
 
+Angular 4.x (angular-sortablejs@2.x.x; sortablejs must be installed separately)
+
 ```sh
-npm install --save angular-sortablejs
+npm install --save sortablejs && npm install --save angular-sortablejs
+```
+
+Angular 2.x (angular-sortablejs@1.x.x; sortablejs is included)
+
+```sh
+npm install --save angular-sortablejs@1.3.1
 ```
 
 ### Webpack configuration
@@ -17,20 +25,20 @@ There is nothing to configure additionally. Enjoy!
 Adapt your `systemjs.config.js` (or another place where you configure SystemJS) file with the following:
 
 ```javascript
-...
+// ...
 var map = {
-  ...
+  // ...
   'angular-sortablejs': 'node_modules/angular-sortablejs/dist/',
   'sortablejs': 'node_modules/sortablejs/Sortable.js',
-  ...
+  // ...
 };
-...
+// ...
 var packages = {
-  ...
+  // ...
   'angular-sortablejs': { main: 'index.js', defaultExtension: 'js' },
-  ...
+  // ...
 };
-...
+// ...
 var config = {
   map: map,
   packages: packages
@@ -47,9 +55,9 @@ First, import `SortablejsModule` into the angular module where you want to use i
 
 ```typescript
 imports: [
-  ...
+  // ...
   SortablejsModule,
-  ...
+  // ...
 ]
 ```
 
@@ -108,6 +116,38 @@ export class AppComponent {
    items = [1, 2, 3, 4, 5];
 }
 ```
+
+### Tracking lists update events
+
+You can use the options' `onUpdate` method to track the changes (see also *Passing the options* section):
+
+```ts
+constructor() {
+  this.options = {
+    onUpdate: (event: any) => {
+      this.postChangesToServer();
+    }
+  };
+}
+```
+
+If you use FormArray you are able to choose a more elegant solution:
+
+```ts
+public items = new FormArray([
+  new FormControl(1),
+  new FormControl(2),
+  new FormControl(3),
+]);
+
+constructor() {
+  this.items.valueChanges.subscribe(() => {
+    this.postChangesToServer(this.items.value);
+  });
+}
+```
+
+but note, that here you will be able to take the whole changed array only (no oldIndex / newIndex).
 
 ### Updating the options
 
@@ -168,12 +208,12 @@ If you want to use the same sortable options across different places of your app
 
 ```typescript
 imports: [
-  ...
+  // ...
   // any properties and events available on original library work here as well
   SortablejsModule.forRoot({
     animation: 150
   }),
-  ...
+  // ...
 ]
 ```
 

@@ -5,6 +5,12 @@ import { SortablejsModule } from './sortablejs.module';
 
 import * as Sortable from 'sortablejs/Sortable.min';
 
+// original library calls the events in unnatural order
+// first the item is added, then removed from the previous array
+// this is a temporary event to work this around
+// as long as only one sortable takes place at a certain time
+// this is enough to have a single `global` event
+let onremove: (item: any) => void;
 
 @Directive({
   selector: '[sortablejs]'
@@ -19,7 +25,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
   private _sortable: any;
 
-  @Input() runInsideAngular: boolean = false;
+  @Input() runInsideAngular = false;
 
   constructor(private sortablejsService: SortablejsService,
               private element: ElementRef,
