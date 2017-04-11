@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
@@ -9,7 +9,7 @@
     "skipDefaultLibCheck": true,
     "preserveConstEnums": true,
     "removeComments": false,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
     "strictNullChecks": false,
     "allowSyntheticDefaultImports": true,
@@ -18,7 +18,6 @@
     "outDir": "./dist",
     "types": [
       "node",
-      "core-js",
       "systemjs",
       "sortablejs"
     ]

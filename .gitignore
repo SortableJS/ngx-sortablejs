@@ -4,5 +4,12 @@ codegen
 npm-debug.log
 *.bak
 *.tgz
-*.iml
 *.idea
+
+#System Files
+.DS_Store
+Thumbs.db
+*.iml
+
+#yarn
+yarn-error.log
