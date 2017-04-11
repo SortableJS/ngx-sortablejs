@@ -83,7 +83,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     // allows to forget about tracking this.items changes
     return {
       onAdd: (event: SortableEvent) => {
-        if (this.bindingEnabled) {
+        if (!this.inputOptions.disableBinding && this.bindingEnabled) {
           this.onremove = (item: any) => {
             if (this.isItemsFormArray) {
                 this.items.insert(event.newIndex, item);
@@ -96,7 +96,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
         this.proxyEvent('onAdd', event);
       },
       onRemove: (event: SortableEvent) => {
-        if (this.bindingEnabled) {
+        if (!this.inputOptions.disableBinding && this.bindingEnabled) {
           let item: any;
 
           if (this.isItemsFormArray) {
@@ -113,7 +113,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
         this.proxyEvent('onRemove', event);
       },
       onUpdate: (event: SortableEvent) => {
-        if (this.bindingEnabled) {
+        if (!this.inputOptions.disableBinding && this.bindingEnabled) {
           if (this.isItemsFormArray) {
             let relocated = this.items.at(event.oldIndex);
 

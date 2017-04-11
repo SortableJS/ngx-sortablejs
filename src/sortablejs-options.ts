@@ -3,6 +3,7 @@ export interface SortablejsOptions {
   sort?: boolean;
   delay?: number;
   disabled?: boolean;
+  disableBinding?: boolean;
   store?: {
     get: (sortable: any) => any[];
     set: (sortable: any) => any;
