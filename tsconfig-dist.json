@@ -9,7 +9,7 @@
     "experimentalDecorators": true,
     "skipDefaultLibCheck": true,
     "preserveConstEnums": true,
-    "removeComments": false,
+    "removeComments": true,
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
     "strictNullChecks": false,
