@@ -1,4 +1,7 @@
-import { Directive, ElementRef, Input, OnInit, OnChanges, OnDestroy, NgZone, SimpleChanges, SimpleChange } from '@angular/core';
+import {
+  Directive, ElementRef, Input, OnInit, OnChanges, OnDestroy, NgZone, SimpleChanges, SimpleChange,
+  ChangeDetectorRef
+} from '@angular/core';
 import { SortablejsOptions } from './sortablejs-options';
 import { GLOBALS } from './globals';
 import { SortablejsService } from './sortablejs.service';
@@ -20,9 +23,12 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
   @Input() runInsideAngular = false;
 
-  constructor(private sortablejsService: SortablejsService,
-              private element: ElementRef,
-              private zone: NgZone) {}
+  constructor(
+    private sortablejsService: SortablejsService,
+    private element: ElementRef,
+    private zone: NgZone,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   public ngOnInit() {
     if (this.runInsideAngular) {
@@ -60,6 +66,8 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     if (this.inputOptions && this.inputOptions[eventName]) {
       this.inputOptions[eventName](event);
     }
+
+    this.cdr.detectChanges();
   }
 
   // returns whether the items are currently set
