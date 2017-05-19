@@ -106,6 +106,9 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
           if (this.isItemsFormArray) {
               item = this.items.at(event.oldIndex);
               this.items.removeAt(event.oldIndex);
+          } else if(this.options.group.pull == "clone"){            
+              event.item.remove();
+              item = this.items[event.oldIndex];
           } else {
               item = this.items.splice(event.oldIndex, 1)[0];
           }
