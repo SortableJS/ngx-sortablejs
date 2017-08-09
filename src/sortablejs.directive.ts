@@ -6,7 +6,7 @@ import { SortablejsOptions } from './sortablejs-options';
 import { GLOBALS } from './globals';
 import { SortablejsService } from './sortablejs.service';
 
-import * as Sortable from 'sortablejs/Sortable.min';
+import * as Sortable from 'sortablejs';
 
 @Directive({
   selector: '[sortablejs]'
