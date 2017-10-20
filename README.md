@@ -20,7 +20,13 @@ npm install --save angular-sortablejs@1.3.1
 
 There is nothing to configure additionally. Enjoy!
 
+### Angular CLI configuration
+
+As long as internally Angular CLI uses Webpack, you are already fine!
+
 ### SystemJS configuration
+
+**Follow this step only if you have SystemJS. If you have no errors without this step - most likely you don't need it!**
 
 Adapt your `systemjs.config.js` (or another place where you configure SystemJS) file with the following:
 
