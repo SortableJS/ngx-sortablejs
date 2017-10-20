@@ -16,7 +16,7 @@ Angular 2.x (angular-sortablejs@1.x.x; sortablejs is included)
 npm install --save angular-sortablejs@1.3.1
 ```
 
-You can use it from now on. If you have SystemJS, that's sad, but you can go to the end of the document to find configuration steps there.
+You can use it from now on, e.g. if you use Webpack or Angular CLI. If you have SystemJS, that's sad, but you can go to the end of the document to find configuration steps there.
 
 ## Usage
 
