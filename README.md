@@ -198,7 +198,7 @@ Original events `onAdd`, `onRemove`, `onUpdate` are intercepted by the library i
 
 ## SystemJS configuration
 
-**Follow this only if you have SystemJS. If you have no errors without this step - most likely you don't need it!**
+**IMPORTANT:** Follow this only if you have SystemJS. If you have no errors without this step - most likely you don't need it!
 
 Adapt your `systemjs.config.js` (or another place where you configure SystemJS) file with the following:
 
