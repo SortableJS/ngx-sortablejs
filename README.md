@@ -16,44 +16,7 @@ Angular 2.x (angular-sortablejs@1.x.x; sortablejs is included)
 npm install --save angular-sortablejs@1.3.1
 ```
 
-### Webpack configuration
-
-There is nothing to configure additionally. Enjoy!
-
-### Angular CLI configuration
-
-As long as internally Angular CLI uses Webpack, you are already fine!
-
-### SystemJS configuration
-
-**Follow this step only if you have SystemJS. If you have no errors without this step - most likely you don't need it!**
-
-Adapt your `systemjs.config.js` (or another place where you configure SystemJS) file with the following:
-
-```javascript
-// ...
-var map = {
-  // ...
-  'angular-sortablejs': 'node_modules/angular-sortablejs/dist/',
-  'sortablejs/Sortable.min': 'node_modules/sortablejs/Sortable.min.js',
-  // ...
-};
-// ...
-var packages = {
-  // ...
-  'angular-sortablejs': { main: 'index.js', defaultExtension: 'js' },
-  // ...
-};
-// ...
-var config = {
-  map: map,
-  packages: packages
-};
-
-System.config(config);
-```
-
-This is important to let SystemJS know everything it needs about the dependencies it needs to load.
+You can use it from now on. If you have SystemJS, that's sad, but you can go to the end of the document to find configuration steps there.
 
 ## Usage
 
@@ -232,3 +195,34 @@ The model is automatically updated because you pass the `items` as `<div [sortab
 If you won't pass anything, e.g. `<div sortablejs>`, the items won't be automatically updated, thus you should take care of updating the array on your own using standard `Sortable.js` events.
 
 Original events `onAdd`, `onRemove`, `onUpdate` are intercepted by the library in order to reflect the sortable changes into the data. If you will add your own event handlers (inside of the options object) they will be called right after the data binding is done. If you don't pass the data, e.g. `<div sortablejs>` the data binding is skipped and only your event handlers will be fired.
+
+## SystemJS configuration
+
+**Follow this only if you have SystemJS. If you have no errors without this step - most likely you don't need it!**
+
+Adapt your `systemjs.config.js` (or another place where you configure SystemJS) file with the following:
+
+```javascript
+// ...
+var map = {
+  // ...
+  'angular-sortablejs': 'node_modules/angular-sortablejs/dist/',
+  'sortablejs/Sortable.min': 'node_modules/sortablejs/Sortable.min.js',
+  // ...
+};
+// ...
+var packages = {
+  // ...
+  'angular-sortablejs': { main: 'index.js', defaultExtension: 'js' },
+  // ...
+};
+// ...
+var config = {
+  map: map,
+  packages: packages
+};
+
+System.config(config);
+```
+
+This is important to let SystemJS know everything it needs about the dependencies it needs to load.
