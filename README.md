@@ -4,7 +4,7 @@ This package is an Angular 2 binding for [Sortable.js](https://github.com/RubaXa
 
 ## Installation
 
-Angular 4.x (angular-sortablejs@2.x.x; sortablejs must be installed separately)
+Angular >= 4.x (angular-sortablejs@2.x.x; sortablejs must be installed separately)
 
 ```sh
 npm install --save sortablejs && npm install --save angular-sortablejs
@@ -20,7 +20,17 @@ You are configured now. If you use Webpack or Angular CLI go to the usage. If yo
 
 ## Usage
 
-First, import `SortablejsModule` into the angular module where you want to use it:
+First, import `SortablejsModule.forRoot({ /* and here some global settings if needed */ })` into the root module of your application:
+
+```typescript
+imports: [
+  // ...
+  SortablejsModule.forRoot({ animation: 150 }),
+  // ...
+]
+```
+
+Then import `SortablejsModule` into the other angular modules where you want to use it:
 
 ```typescript
 imports: [
