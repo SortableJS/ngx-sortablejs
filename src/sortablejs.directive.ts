@@ -1,10 +1,19 @@
 import {
-  Directive, ElementRef, Input, OnInit, OnChanges, OnDestroy, NgZone, SimpleChanges, SimpleChange,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  Directive,
+  ElementRef,
+  Inject,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChange,
+  SimpleChanges
 } from '@angular/core';
-import { SortablejsOptions } from './sortablejs-options';
-import { GLOBALS } from './globals';
-import { SortablejsService } from './sortablejs.service';
+import {SortablejsOptions} from './sortablejs-options';
+import {GLOBALS} from './globals';
+import {SortablejsService} from './sortablejs.service';
 
 import * as Sortable from 'sortablejs/Sortable.min';
 
@@ -19,57 +28,20 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   @Input('sortablejsOptions')
   inputOptions: SortablejsOptions;
 
-  private _sortable: any;
-
   @Input() runInsideAngular = false;
 
-  constructor(
-    private sortablejsService: SortablejsService,
-    private element: ElementRef,
-    private zone: NgZone,
-    private cdr: ChangeDetectorRef
-  ) {}
+  private _sortable: any;
 
-  public ngOnInit() {
-    if (this.runInsideAngular) {
-      this._sortable = Sortable.create(this.element.nativeElement, this.options);
-    } else {
-      this.zone.runOutsideAngular(() => {
-        this._sortable = Sortable.create(this.element.nativeElement, this.options);
-      });
-    }
-  }
-
-  public ngOnChanges(changes: SimpleChanges) {
-    const optionsChange: SimpleChange = changes['inputOptions'];
-    if (optionsChange && !optionsChange.isFirstChange()) {
-      const previousOptions: SortablejsOptions = optionsChange.previousValue;
-      const currentOptions: SortablejsOptions = optionsChange.currentValue;
-      Object.keys(currentOptions).forEach(optionName => {
-        if (currentOptions[optionName] !== previousOptions[optionName]) {
-          // use low-level option setter
-          this._sortable.option(optionName, currentOptions[optionName]);
-        }
-      });
-    }
-  }
-
-  public ngOnDestroy() {
-    if (this._sortable) {
-      this._sortable.destroy();
-    }
+  constructor(@Inject(GLOBALS)
+              private globalConfig: SortablejsOptions,
+              private sortablejsService: SortablejsService,
+              private element: ElementRef,
+              private zone: NgZone,
+              private cdr: ChangeDetectorRef) {
   }
 
   private get options() {
-    return Object.assign({}, GLOBALS.options, this.inputOptions, this.overridenOptions);
-  }
-
-  private proxyEvent(eventName: string, event: SortableEvent) {
-    if (this.inputOptions && this.inputOptions[eventName]) {
-      this.inputOptions[eventName](event);
-    }
-
-    this.cdr.detectChanges();
+    return Object.assign({}, this.globalConfig, this.inputOptions, this.overridenOptions);
   }
 
   // returns whether the items are currently set
@@ -77,7 +49,6 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     return !!this.items;
   }
 
-  // we need this to identify that the input is a FormArray
   // we don't want to have a dependency on @angular/forms just for that
   private get isItemsFormArray() {
     // just checking for random FormArray methods not available on a standard array
@@ -92,9 +63,9 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
         if (this.bindingEnabled) {
           this.sortablejsService.onremove = (item: any) => {
             if (this.isItemsFormArray) {
-                this.items.insert(event.newIndex, item);
+              this.items.insert(event.newIndex, item);
             } else {
-                this.items.splice(event.newIndex, 0, item);
+              this.items.splice(event.newIndex, 0, item);
             }
           };
         }
@@ -106,10 +77,10 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
           let item: any;
 
           if (this.isItemsFormArray) {
-              item = this.items.at(event.oldIndex);
-              this.items.removeAt(event.oldIndex);
+            item = this.items.at(event.oldIndex);
+            this.items.removeAt(event.oldIndex);
           } else {
-              item = this.items.splice(event.oldIndex, 1)[0];
+            item = this.items.splice(event.oldIndex, 1)[0];
           }
 
           this.sortablejsService.onremove(item);
@@ -135,6 +106,49 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     };
   }
 
+  public ngOnInit() {
+    if (this.runInsideAngular) {
+      this._sortable = Sortable.create(this.element.nativeElement, this.options);
+    } else {
+      this.zone.runOutsideAngular(() => {
+        this._sortable = Sortable.create(this.element.nativeElement, this.options);
+      });
+    }
+  }
+
+  public ngOnChanges(changes: SimpleChanges) {
+    const optionsChange: SimpleChange = changes['inputOptions'];
+    if (optionsChange && !optionsChange.isFirstChange()) {
+      const previousOptions: SortablejsOptions = optionsChange.previousValue;
+      const currentOptions: SortablejsOptions = optionsChange.currentValue;
+      Object.keys(currentOptions).forEach(optionName => {
+        if (currentOptions[optionName] !== previousOptions[optionName]) {
+          // use low-level option setter
+          this._sortable.option(optionName, currentOptions[optionName]);
+        }
+      });
+    }
+  }
+
+  // we need this to identify that the input is a FormArray
+
+  public ngOnDestroy() {
+    if (this._sortable) {
+      this._sortable.destroy();
+    }
+  }
+
+  private proxyEvent(eventName: string, event: SortableEvent) {
+    if (this.inputOptions && this.inputOptions[eventName]) {
+      this.inputOptions[eventName](event);
+    }
+
+    this.cdr.detectChanges();
+  }
+
 }
 
-interface SortableEvent { oldIndex: number; newIndex: number; }
+interface SortableEvent {
+  oldIndex: number;
+  newIndex: number;
+}
