@@ -48,8 +48,8 @@
     "typescript": "2.2.2"
   },
   "peerDependencies": {
-    "sortablejs": "^1.5.1",
-    "@angular/core": "^4.0.0"
+    "sortablejs": ">=1.5.1",
+    "@angular/core": ">=4.0.0"
   },
   "files": [
     "dist/"
