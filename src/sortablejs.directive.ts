@@ -1,6 +1,6 @@
 import {
   Directive, ElementRef, Input, OnInit, OnChanges, OnDestroy, NgZone, SimpleChanges, SimpleChange,
-  ChangeDetectorRef
+  ChangeDetectorRef, Inject
 } from '@angular/core';
 import { SortablejsOptions } from './sortablejs-options';
 import { GLOBALS } from './globals';
@@ -24,6 +24,8 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   @Input() runInsideAngular = false;
 
   constructor(
+    @Inject(GLOBALS)
+    private globalConfig: SortablejsOptions,
     private sortablejsService: SortablejsService,
     private element: ElementRef,
     private zone: NgZone,
@@ -61,7 +63,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   private get options() {
-    return Object.assign({}, GLOBALS.options, this.inputOptions, this.overridenOptions);
+    return Object.assign({}, this.globalConfig, this.inputOptions, this.overridenOptions);
   }
 
   private proxyEvent(eventName: string, event: SortableEvent) {
