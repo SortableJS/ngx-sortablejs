@@ -20,6 +20,9 @@ export interface SortablejsOptions {
   scroll?: boolean;
   scrollSensitivity?: number;
   scrollSpeed?: number;
+  preventOnFilter?: boolean;
+  dragClass?: string;
+  fallbackTolerance?: number;
   setData?: (dataTransfer: any, draggedElement: any) => any;
   onStart?: (event: any) => any;
   onEnd?: (event: any) => any;
@@ -29,4 +32,7 @@ export interface SortablejsOptions {
   onRemove?: (event: any) => any;
   onFilter?: (event: any) => any;
   onMove?: (event: any) => boolean;
+  scrollFn?: (offsetX: any, offsetY: any, originalEvent: any) => any;
+  onChoose?: (event: any) => any;
+  onClone?: (event: any) => any;
 }
