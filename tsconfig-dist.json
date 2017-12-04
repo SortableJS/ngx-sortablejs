@@ -19,8 +19,7 @@
     "outDir": "./dist",
     "types": [
       "node",
-      "systemjs",
-      "sortablejs"
+      "systemjs"
     ]
   },
   "files": [

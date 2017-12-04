@@ -5,8 +5,10 @@ import {
 import { SortablejsOptions } from './sortablejs-options';
 import { GLOBALS } from './globals';
 import { SortablejsService } from './sortablejs.service';
+import { SortablejsBindingTarget } from './sortablejs-binding-target';
+import { SortablejsBindings } from './sortablejs-bindings';
 
-import * as Sortable from 'sortablejs/Sortable.min';
+const OriginalSortable: any = require('sortablejs');
 
 @Directive({
   selector: '[sortablejs]'
@@ -14,7 +16,7 @@ import * as Sortable from 'sortablejs/Sortable.min';
 export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
   @Input('sortablejs')
-  items: any[] | any; // array or a FormArray
+  sortablejs: SortablejsBindingTarget; // array or a FormArray
 
   @Input('sortablejsOptions')
   inputOptions: SortablejsOptions;
@@ -25,18 +27,18 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     @Optional() @Inject(GLOBALS) private globalConfig: SortablejsOptions,
-    private sortablejsService: SortablejsService,
+    private service: SortablejsService,
     private element: ElementRef,
     private zone: NgZone,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   public ngOnInit() {
     if (this.runInsideAngular) {
-      this._sortable = Sortable.create(this.element.nativeElement, this.options);
+      this._sortable = OriginalSortable.create(this.element.nativeElement, this.options);
     } else {
       this.zone.runOutsideAngular(() => {
-        this._sortable = Sortable.create(this.element.nativeElement, this.options);
+        this._sortable = OriginalSortable.create(this.element.nativeElement, this.options);
       });
     }
   }
@@ -61,6 +63,16 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  private getBindings(): SortablejsBindings {
+    if (this.sortablejs) {
+      return new SortablejsBindings([]);
+    } else if (this.sortablejs instanceof SortablejsBindings) {
+      return this.sortablejs;
+    } else {
+      return new SortablejsBindings([this.sortablejs]);
+    }
+  }
+
   private get options() {
     return Object.assign({}, this.globalConfig || {}, this.inputOptions, this.overridenOptions);
   }
@@ -73,64 +85,28 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     this.cdr.detectChanges();
   }
 
-  // returns whether the items are currently set
-  private get bindingEnabled() {
-    return !!this.items;
-  }
-
-  // we need this to identify that the input is a FormArray
-  // we don't want to have a dependency on @angular/forms just for that
-  private get isItemsFormArray() {
-    // just checking for random FormArray methods not available on a standard array
-    return !!this.items.at && !!this.items.insert && !!this.items.reset;
-  }
-
   private get overridenOptions(): SortablejsOptions {
     // always intercept standard events but act only in case items are set (bindingEnabled)
     // allows to forget about tracking this.items changes
     return {
       onAdd: (event: SortableEvent) => {
-        if (this.bindingEnabled) {
-          this.sortablejsService.onremove = (item: any) => {
-            if (this.isItemsFormArray) {
-                this.items.insert(event.newIndex, item);
-            } else {
-                this.items.splice(event.newIndex, 0, item);
-            }
-          };
-        }
-
+        this.service.onremove = (items: any[]) => this.getBindings().injectIntoEvery(event.newIndex, items);
         this.proxyEvent('onAdd', event);
       },
       onRemove: (event: SortableEvent) => {
-        if (this.bindingEnabled) {
-          let item: any;
+        const bindings = this.getBindings();
 
-          if (this.isItemsFormArray) {
-              item = this.items.at(event.oldIndex);
-              this.items.removeAt(event.oldIndex);
-          } else {
-              item = this.items.splice(event.oldIndex, 1)[0];
-          }
-
-          this.sortablejsService.onremove(item);
-          this.sortablejsService.onremove = null;
+        if (bindings.provided) {
+          this.service.onremove(bindings.extractFromEvery(event.oldIndex));
+          this.service.onremove = null;
         }
 
         this.proxyEvent('onRemove', event);
       },
       onUpdate: (event: SortableEvent) => {
-        if (this.bindingEnabled) {
-          if (this.isItemsFormArray) {
-            let relocated = this.items.at(event.oldIndex);
+        const bindings = this.getBindings();
 
-            this.items.removeAt(event.oldIndex);
-            this.items.insert(event.newIndex, relocated);
-          } else {
-            this.items.splice(event.newIndex, 0, this.items.splice(event.oldIndex, 1)[0]);
-          }
-        }
-
+        bindings.injectIntoEvery(event.newIndex, bindings.extractFromEvery(event.oldIndex));
         this.proxyEvent('onUpdate', event);
       }
     };
