@@ -64,7 +64,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   private getBindings(): SortablejsBindings {
-    if (this.sortablejs) {
+    if (!this.sortablejs) {
       return new SortablejsBindings([]);
     } else if (this.sortablejs instanceof SortablejsBindings) {
       return this.sortablejs;
