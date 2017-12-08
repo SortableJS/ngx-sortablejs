@@ -25,6 +25,17 @@ export class SortablejsBinding {
     return item;
   }
 
+  at(index: number) {
+    let item;
+    if (this.isFormArray) {
+      item = this.target.at(index);
+    } else {
+      item = this.target[index];
+    }
+
+    return item;
+  }
+
   // we need this to identify that the target is a FormArray
   // we don't want to have a dependency on @angular/forms just for that
   private get isFormArray() {

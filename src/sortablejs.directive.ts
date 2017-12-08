@@ -1,12 +1,13 @@
 import {
   Directive, ElementRef, Input, OnInit, OnChanges, OnDestroy, NgZone, SimpleChanges, SimpleChange,
-  ChangeDetectorRef, Inject, Optional
+  ChangeDetectorRef, Inject, Optional, Renderer2
 } from '@angular/core';
 import { SortablejsOptions } from './sortablejs-options';
 import { GLOBALS } from './globals';
 import { SortablejsService } from './sortablejs.service';
 import { SortablejsBindingTarget } from './sortablejs-binding-target';
 import { SortablejsBindings } from './sortablejs-bindings';
+import * as _ from 'lodash';
 
 const OriginalSortable: any = require('sortablejs');
 
@@ -31,6 +32,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     private element: ElementRef,
     private zone: NgZone,
     private cdr: ChangeDetectorRef,
+    private renderer: Renderer2
   ) {}
 
   public ngOnInit() {
@@ -90,14 +92,33 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     // allows to forget about tracking this.items changes
     return {
       onAdd: (event: SortableEvent) => {
-        this.service.onremove = (items: any[]) => this.getBindings().injectIntoEvery(event.newIndex, items);
+        this.service.onremove = (items: any[]) => {this.getBindings().injectIntoEvery(event.newIndex, items); this.cdr.detectChanges(); };
         this.proxyEvent('onAdd', event);
       },
       onRemove: (event: SortableEvent) => {
         const bindings = this.getBindings();
 
         if (bindings.provided) {
-          this.service.onremove(bindings.extractFromEvery(event.oldIndex));
+          let items;
+          if (this._sortable.options.group.checkPull(this._sortable,this._sortable) == 'clone') {
+            // clone existing items
+            items = _.cloneDeep(bindings.getFromEvery(event.oldIndex)); 
+            // event.item is the original item from the source list which is moved to the target list
+            // event.clone is a clone of the original item and will be added to source list
+            // If bindings are provided, adding the item dom element to the target list causes artifacts
+            // as it interferes with the rendering performed by the angular template. 
+            // Therefore we remove it immediately and also move the original item back to the source list.
+            // (event handler may be attached to the original item and not its clone, therefore keeping
+            // the original dom node, circumvents side effects )
+            this.renderer.removeChild(event.item.parentNode, event.item);
+            this.renderer.insertBefore(event.clone.parentNode, event.item, event.clone);
+            this.renderer.removeChild(event.clone.parentNode, event.clone);
+          } else {
+            // extract existing items and remove them
+            items = bindings.extractFromEvery(event.oldIndex);
+          }
+          // trigger callback to add these items to the target list
+          this.service.onremove(items);
           this.service.onremove = null;
         }
 
@@ -114,4 +135,4 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
 }
 
-interface SortableEvent { oldIndex: number; newIndex: number; }
+interface SortableEvent { oldIndex: number; newIndex: number; item: any, clone: any}
