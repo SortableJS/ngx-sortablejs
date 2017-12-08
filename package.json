@@ -48,7 +48,8 @@
   },
   "peerDependencies": {
     "sortablejs": ">=1.5.1",
-    "@angular/core": ">=4.0.0"
+    "@angular/core": ">=4.0.0",
+    "lodash": ">=4.17.0"
   },
   "files": [
     "dist/"

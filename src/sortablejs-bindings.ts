@@ -17,6 +17,10 @@ export class SortablejsBindings {
     return this.bindings.map(b => b.remove(index));
   }
 
+  getFromEvery(index: number) {
+    return this.bindings.map(b => b.at(index));
+  }
+
   get provided() {
     return !!this.bindings.length;
   }
