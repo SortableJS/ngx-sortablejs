@@ -157,7 +157,7 @@ export class AppComponent {
 
 ### Drag & drop between two lists: clone mode
 
-The clone mode is similar to the one above. The only important thing is that the `angular-sortablejs` does clone the HTML element but **does not clone the variable** (or `FormControl` in case of `FormArray` input). By default the variable will be taken as is: a primitive will be copied, an object will be referenced.
+The clone mode is similar to the one above (of course the proper Sortablejs settings should be used; see demo). The only important thing is that the `angular-sortablejs` does clone the HTML element but **does not clone the variable** (or `FormControl` in case of `FormArray` input). By default the variable will be taken as is: a primitive will be copied, an object will be referenced.
 
 If you want to clone the item being sorted in a different manner, you can provide `sortablejsCloneFunction` as a parameter. This function receives an item and should return a clone of that item.
 
