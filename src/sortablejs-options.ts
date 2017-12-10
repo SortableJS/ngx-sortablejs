@@ -1,5 +1,10 @@
 export interface SortablejsOptions {
-  group?: any;
+  group?: string | {
+    name: string;
+    pull: boolean | 'clone' | Function;
+    put: boolean | string[] | Function;
+    revertClone: boolean;
+  };
   sort?: boolean;
   delay?: number;
   disabled?: boolean;
@@ -17,7 +22,7 @@ export interface SortablejsOptions {
   forceFallback?: boolean;
   fallbackClass?: string;
   fallbackOnBody?: boolean;
-  scroll?: boolean;
+  scroll?: boolean | HTMLElement;
   scrollSensitivity?: number;
   scrollSpeed?: number;
   preventOnFilter?: boolean;
