@@ -1,8 +1,8 @@
-import {ModuleWithProviders, NgModule} from '@angular/core';
-import {SortablejsOptions} from './sortablejs-options';
-import {GLOBALS} from './globals';
-import {SortablejsDirective} from './sortablejs.directive';
-import {SortablejsService} from './sortablejs.service';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { SortablejsOptions } from './sortablejs-options';
+import { GLOBALS } from './globals';
+import { SortablejsDirective } from './sortablejs.directive';
+import { SortablejsService } from './sortablejs.service';
 
 @NgModule({
   declarations: [SortablejsDirective],
