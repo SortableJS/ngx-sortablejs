@@ -97,7 +97,8 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   private clone<T>(item: T): T {
-    return (this.inputCloneFunction || (item => item))(item);
+    // by default pass the item through, no cloning performed
+    return (this.inputCloneFunction || (_item => _item))(item);
   }
 
   private get overridenOptions(): SortablejsOptions {
@@ -114,6 +115,10 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
         if (bindings.provided) {
           if (this.isCloning) {
             this.service.transfer(bindings.getFromEvery(event.oldIndex).map(item => this.clone(item)));
+
+            // removing the item created by sortablejs
+            // strangely this issue appears only for cloning
+            event.item.parentNode.removeChild(event.item);
           } else {
             this.service.transfer(bindings.extractFromEvery(event.oldIndex));
           }
@@ -134,4 +139,4 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
 }
 
-interface SortableEvent { oldIndex: number; newIndex: number; }
+interface SortableEvent { oldIndex: number; newIndex: number; item: HTMLElement; }
