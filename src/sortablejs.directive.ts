@@ -1,6 +1,6 @@
 import {
   Directive, ElementRef, Input, OnInit, OnChanges, OnDestroy, NgZone, SimpleChanges, SimpleChange,
-  ChangeDetectorRef, Inject, Optional
+  ChangeDetectorRef, Inject, Optional, Renderer2
 } from '@angular/core';
 import { SortablejsOptions } from './sortablejs-options';
 import { GLOBALS } from './globals';
@@ -34,6 +34,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     private element: ElementRef,
     private zone: NgZone,
     private cdr: ChangeDetectorRef,
+    private renderer: Renderer2,
   ) {}
 
   public ngOnInit() {
@@ -116,9 +117,17 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
           if (this.isCloning) {
             this.service.transfer(bindings.getFromEvery(event.oldIndex).map(item => this.clone(item)));
 
-            // removing the item created by sortablejs
-            // strangely this issue appears only for cloning
-            event.item.parentNode.removeChild(event.item);
+            // great thanks to https://github.com/tauu
+            // event.item is the original item from the source list which is moved to the target list
+            // event.clone is a clone of the original item and will be added to source list
+            // If bindings are provided, adding the item dom element to the target list causes artifacts
+            // as it interferes with the rendering performed by the angular template.
+            // Therefore we remove it immediately and also move the original item back to the source list.
+            // (event handler may be attached to the original item and not its clone, therefore keeping
+            // the original dom node, circumvents side effects )
+            this.renderer.removeChild(event.item.parentNode, event.item);
+            this.renderer.insertBefore(event.clone.parentNode, event.item, event.clone);
+            this.renderer.removeChild(event.clone.parentNode, event.clone);
           } else {
             this.service.transfer(bindings.extractFromEvery(event.oldIndex));
           }
@@ -139,4 +148,4 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
 }
 
-interface SortableEvent { oldIndex: number; newIndex: number; item: HTMLElement; }
+interface SortableEvent { oldIndex: number; newIndex: number; item: HTMLElement; clone: HTMLElement }
