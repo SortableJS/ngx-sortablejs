@@ -8,6 +8,6 @@ export class SortablejsService {
   // this is a temporary event to work this around
   // as long as only one sortable takes place at a certain time
   // this is enough to have a single `global` event
-  onremove: (item: any) => void;
+  transfer: (items: any[]) => void;
 
 }

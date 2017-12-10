@@ -12,6 +12,10 @@ export class SortablejsBinding {
     }
   }
 
+  get(index: number) {
+    return this.isFormArray ? this.target.at(index) : this.target[index];
+  }
+
   remove(index: number) {
     let item;
 

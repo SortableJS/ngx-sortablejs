@@ -6,11 +6,10 @@
   "typings": "./dist/index",
   "scripts": {
     "clean": "rimraf ./dist/* ./codegen/*",
-    "build": "tsc",
+    "build-local": "mv node_modules_ node_modules && npm run build-dist && mv node_modules node_modules_",
+    "build": "ngc -p tsconfig-dist.json",
     "prebuild": "npm run clean",
-    "build-dist": "ngc -p tsconfig-dist.json",
-    "prebuild-dist": "npm run clean",
-    "prepublish": "npm run tslint && npm run build-dist",
+    "prepublish": "npm run tslint && npm run build",
     "tslint": "tslint ./app/**/*.ts -t verbose"
   },
   "repository": {
@@ -42,7 +41,7 @@
     "@types/systemjs": "0.20.2",
     "git-validate": "2.2.2",
     "rimraf": "2.6.1",
-    "rxjs": "5.3.0",
+    "rxjs": "^5.5.2",
     "tslint": "5.1.0",
     "typescript": "2.2.2"
   },

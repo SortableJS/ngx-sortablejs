@@ -15,11 +15,14 @@ const OriginalSortable: any = require('sortablejs');
 })
 export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
-  @Input('sortablejs')
+  @Input()
   sortablejs: SortablejsBindingTarget; // array or a FormArray
 
   @Input('sortablejsOptions')
   inputOptions: SortablejsOptions;
+
+  @Input('sortablejsCloneFunction')
+  inputCloneFunction: <T>(item: T) => T;
 
   private _sortable: any;
 
@@ -74,15 +77,27 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   private get options() {
-    return Object.assign({}, this.globalConfig || {}, this.inputOptions, this.overridenOptions);
+    return { ...this.optionsWithoutEvents, ...this.overridenOptions };
   }
 
-  private proxyEvent(eventName: string, event: SortableEvent) {
-    if (this.inputOptions && this.inputOptions[eventName]) {
-      this.inputOptions[eventName](event);
+  private get optionsWithoutEvents() {
+    return { ...(this.globalConfig || {}), ...(this.inputOptions || {})};
+  }
+
+  private proxyEvent(eventName: string, ...params: any[]) {
+    if (this.optionsWithoutEvents && this.optionsWithoutEvents[eventName]) {
+      this.optionsWithoutEvents[eventName](...params);
     }
 
     this.cdr.detectChanges();
+  }
+
+  private get isCloning() {
+    return this._sortable.options.group.checkPull(this._sortable, this._sortable) === 'clone';
+  }
+
+  private clone<T>(item: T): T {
+    return (this.inputCloneFunction || (item => item))(item);
   }
 
   private get overridenOptions(): SortablejsOptions {
@@ -90,15 +105,20 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     // allows to forget about tracking this.items changes
     return {
       onAdd: (event: SortableEvent) => {
-        this.service.onremove = (items: any[]) => this.getBindings().injectIntoEvery(event.newIndex, items);
+        this.service.transfer = (items: any[]) => this.getBindings().injectIntoEvery(event.newIndex, items);
         this.proxyEvent('onAdd', event);
       },
       onRemove: (event: SortableEvent) => {
         const bindings = this.getBindings();
 
         if (bindings.provided) {
-          this.service.onremove(bindings.extractFromEvery(event.oldIndex));
-          this.service.onremove = null;
+          if (this.isCloning) {
+            this.service.transfer(bindings.getFromEvery(event.oldIndex).map(item => this.clone(item)));
+          } else {
+            this.service.transfer(bindings.extractFromEvery(event.oldIndex));
+          }
+
+          this.service.transfer = null;
         }
 
         this.proxyEvent('onRemove', event);
@@ -108,7 +128,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
         bindings.injectIntoEvery(event.newIndex, bindings.extractFromEvery(event.oldIndex));
         this.proxyEvent('onUpdate', event);
-      }
+      },
     };
   }
 

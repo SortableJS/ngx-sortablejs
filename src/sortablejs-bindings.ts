@@ -13,6 +13,10 @@ export class SortablejsBindings {
     this.bindings.forEach((b, i) => b.insert(index, items[i]));
   }
 
+  getFromEvery(index: number) {
+    return this.bindings.map(b => b.get(index));
+  }
+
   extractFromEvery(index: number) {
     return this.bindings.map(b => b.remove(index));
   }
