@@ -2,6 +2,8 @@
 
 This package is an Angular 2 binding for [Sortable.js](https://github.com/RubaXa/Sortable). Supports standard arrays and Angular `FormArray`.
 
+[DEMO: see this in action](https://smnbbrv.github.io/angular-sortablejs-demo/sortable-array) 
+
 ## Installation
 
 Angular >= 4.x (angular-sortablejs@2.x.x; sortablejs must be installed separately)
