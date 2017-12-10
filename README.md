@@ -58,13 +58,6 @@ import { Component } from '@angular/core';
       <div [sortablejs]="items">
         <div *ngFor="let item of items">{{ item }}</div>
       </div>
-
-      <hr>
-
-      <h2>See the result</h2>
-      <div>
-        <div *ngFor="let item of items">{{ item }}</div>
-      </div>
     `
 })
 export class AppComponent {
@@ -84,13 +77,6 @@ import { Component } from '@angular/core';
     template: `
       <h2>Drag / drop the item</h2>
       <div [sortablejs]="items" [sortablejsOptions]="{ animation: 150 }">
-        <div *ngFor="let item of items">{{ item }}</div>
-      </div>
-
-      <hr>
-
-      <h2>See the result</h2>
-      <div>
         <div *ngFor="let item of items">{{ item }}</div>
       </div>
     `
@@ -157,16 +143,6 @@ import { SortablejsOptions } from 'angular-sortablejs';
     <div class="items2" [sortablejs]="items2" [sortablejsOptions]="options">
       <div *ngFor="let item of items2">{{ item }}</div>
     </div>
-
-    <hr>
-
-    <h2>See the result</h2>
-    <div>
-      <h3>list 1</h3>
-      <div *ngFor="let item of items1">{{ item }}</div>
-      <h3>list 2</h3>
-      <div *ngFor="let item of items2">{{ item }}</div>
-    </div>
     `
 })
 export class AppComponent {
@@ -178,6 +154,40 @@ export class AppComponent {
    };
 }
 ```
+
+### Drag & drop between two lists: clone mode
+
+The clone mode is similar to the one above. The only important thing is that the `angular-sortablejs` does clone the HTML element but **does not clone the variable** (or `FormControl` in case of `FormArray` input). By default the variable will be taken as is: a primitive will be copied, an object will be referenced.
+
+If you want to clone the item being sorted in a different manner, you can provide `sortablejsCloneFunction` as a parameter. This function receives an item and should return a clone of that item.
+
+```typescript
+import { Component } from '@angular/core';
+import { SortablejsOptions } from 'angular-sortablejs';
+
+@Component({
+    selector: 'my-app',
+    template: `
+    <h2>Drag / drop the item</h2>
+    <h3>list 1</h3>
+    <div class="items1" [sortablejs]="items1" [sortablejsOptions]="options" [sortablejsCloneFunction]="myCloneImplementation">
+      <div *ngFor="let item of items1">{{ item }}</div>
+    </div>
+    <h3>list 2</h3>
+    <div class="items2" [sortablejs]="items2" [sortablejsOptions]="options" [sortablejsCloneFunction]="myCloneImplementation">
+      <div *ngFor="let item of items2">{{ item }}</div>
+    </div>
+    `
+})
+export class AppComponent {
+
+  myCloneImplementation(item) {
+    return item; // this is what happens if sortablejsCloneFunction is not provided. Add your stuff here
+  }
+
+}
+```
+
 ### Bind events inside Angular zone
 
 By default, the boolean parameter **runInsideAngular** is set to **false**.
