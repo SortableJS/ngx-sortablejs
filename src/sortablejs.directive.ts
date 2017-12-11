@@ -1,6 +1,17 @@
 import {
-  Directive, ElementRef, Input, OnInit, OnChanges, OnDestroy, NgZone, SimpleChanges, SimpleChange,
-  ChangeDetectorRef, Inject, Optional, Renderer2
+  ApplicationRef,
+  Directive,
+  ElementRef,
+  Inject,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Renderer2,
+  SimpleChange,
+  SimpleChanges
 } from '@angular/core';
 import { SortablejsOptions } from './sortablejs-options';
 import { GLOBALS } from './globals';
@@ -33,7 +44,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     private service: SortablejsService,
     private element: ElementRef,
     private zone: NgZone,
-    private cdr: ChangeDetectorRef,
+    private applicationRef: ApplicationRef,
     private renderer: Renderer2,
   ) {}
 
@@ -103,20 +114,9 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   private detectChanges() {
-    this.zone.run(() => {
-      const button: HTMLButtonElement = this.renderer.createElement('button');
-
-      this.renderer.listen(button, 'click', e => {
-        e.preventDefault();
-        e.stopPropagation();
-      });
-
-      this.renderer.appendChild(this.element.nativeElement, button);
-
-      button.click();
-
-      this.renderer.removeChild(button.parentNode, button);
-    });
+    // we must detect changes on all the components
+    // as a side effect of running outside angular zone
+    this.applicationRef.tick();
   }
 
   private get overridenOptions(): SortablejsOptions {
