@@ -5,11 +5,10 @@
   "main": "./dist/index.js",
   "typings": "./dist/index",
   "scripts": {
-    "clean": "rimraf ./dist/* ./codegen/*",
-    "build-local": "mv node_modules_ node_modules && npm run build-dist && mv node_modules node_modules_",
-    "build": "ngc -p tsconfig-dist.json",
-    "prebuild": "npm run clean",
-    "prepublish": "npm run tslint && npm run build",
+    "start": "watch 'npm run build-local' src",
+    "build-local": "npm run build && cp -R dist ../angular-sortablejs-demo/node_modules/angular-sortablejs",
+    "build": "rimraf ./dist/* ./codegen/* && ngc -p tsconfig-dist.json",
+    "prepare": "npm run tslint && npm run build",
     "tslint": "tslint ./app/**/*.ts -t verbose"
   },
   "repository": {
@@ -33,7 +32,6 @@
   },
   "homepage": "https://github.com/SortableJS/angular-sortablejs#readme",
   "devDependencies": {
-    "sortablejs": "^1.5.1",
     "@angular/compiler": "4.0.1",
     "@angular/compiler-cli": "4.0.1",
     "@angular/core": "4.0.1",
@@ -42,8 +40,10 @@
     "git-validate": "2.2.2",
     "rimraf": "2.6.1",
     "rxjs": "^5.5.2",
+    "sortablejs": "^1.5.1",
     "tslint": "5.1.0",
-    "typescript": "2.2.2"
+    "typescript": "2.2.2",
+    "watch": "^1.0.2"
   },
   "peerDependencies": {
     "sortablejs": ">=1.5.1",

@@ -90,7 +90,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
       this.optionsWithoutEvents[eventName](...params);
     }
 
-    this.cdr.detectChanges();
+    this.detectChanges();
   }
 
   private get isCloning() {
@@ -102,12 +102,33 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     return (this.inputCloneFunction || (_item => _item))(item);
   }
 
+  private detectChanges() {
+    this.zone.run(() => {
+      const button: HTMLButtonElement = this.renderer.createElement('button');
+
+      this.renderer.listen(button, 'click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      this.renderer.appendChild(this.element.nativeElement, button);
+
+      button.click();
+
+      this.renderer.removeChild(button.parentNode, button);
+    });
+  }
+
   private get overridenOptions(): SortablejsOptions {
     // always intercept standard events but act only in case items are set (bindingEnabled)
     // allows to forget about tracking this.items changes
     return {
       onAdd: (event: SortableEvent) => {
-        this.service.transfer = (items: any[]) => this.getBindings().injectIntoEvery(event.newIndex, items);
+        this.service.transfer = (items: any[]) => {
+          this.getBindings().injectIntoEvery(event.newIndex, items);
+          this.detectChanges(); // we need to detect here again because the transferring happens after onAdd
+        };
+
         this.proxyEvent('onAdd', event);
       },
       onRemove: (event: SortableEvent) => {
