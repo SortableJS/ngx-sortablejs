@@ -220,7 +220,7 @@ If you won't pass anything, e.g. `<div sortablejs>`, the items won't be automati
 
 Original events `onAdd`, `onRemove`, `onUpdate` are intercepted by the library in order to reflect the sortable changes into the data. If you will add your own event handlers (inside of the options object) they will be called right after the data binding is done. If you don't pass the data, e.g. `<div sortablejs>` the data binding is skipped and only your event handlers will be fired.
 
-Important: the `onAdd` event happens before the `onRemove` event because the original library makes it like that. If you want to work this around and call the events in the opposite order see how we do it in the directive's source code.
+Important: the original `onAdd` event happens before the `onRemove` event because the original library makes it like that. We change this behavior and call 'onAdd' after the 'onRemove'. If you want to work with original onAdd event you can use `onAddOriginal` which happens before `onRemove`.
 
 ## SystemJS configuration
 

@@ -126,10 +126,10 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
       onAdd: (event: SortableEvent) => {
         this.service.transfer = (items: any[]) => {
           this.getBindings().injectIntoEvery(event.newIndex, items);
-          this.detectChanges(); // we need to detect here again because the transferring happens after onAdd
+          this.proxyEvent('onAdd', event);
         };
 
-        this.proxyEvent('onAdd', event);
+        this.proxyEvent('onAddOriginal', event);
       },
       onRemove: (event: SortableEvent) => {
         const bindings = this.getBindings();

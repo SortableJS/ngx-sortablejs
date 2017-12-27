@@ -32,6 +32,7 @@ export interface SortablejsOptions {
   onStart?: (event: any) => any;
   onEnd?: (event: any) => any;
   onAdd?: (event: any) => any;
+  onAddOriginal?: (event: any) => any;
   onUpdate?: (event: any) => any;
   onSort?: (event: any) => any;
   onRemove?: (event: any) => any;
