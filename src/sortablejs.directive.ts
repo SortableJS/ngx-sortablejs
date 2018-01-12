@@ -66,7 +66,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
       Object.keys(currentOptions).forEach(optionName => {
         if (currentOptions[optionName] !== previousOptions[optionName]) {
           // use low-level option setter
-          this._sortable.option(optionName, currentOptions[optionName]);
+          this._sortable.option(optionName, this.options[optionName]);
         }
       });
     }
