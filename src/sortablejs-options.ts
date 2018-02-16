@@ -40,5 +40,6 @@ export interface SortablejsOptions {
   onMove?: (event: any) => boolean;
   scrollFn?: (offsetX: any, offsetY: any, originalEvent: any) => any;
   onChoose?: (event: any) => any;
+  onUnchoose?: (event: any) => any;
   onClone?: (event: any) => any;
 }
