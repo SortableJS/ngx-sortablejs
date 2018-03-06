@@ -11,7 +11,7 @@ See the library in action in a [demo](https://smnbbrv.github.io/angular-sortable
 Angular >= 4.x (angular-sortablejs@2.x.x; sortablejs must be installed separately)
 
 ```sh
-npm install --save sortablejs && npm install --save angular-sortablejs
+npm install --save sortablejs angular-sortablejs
 ```
 
 Angular 2.x (angular-sortablejs@1.x.x; sortablejs is included)
