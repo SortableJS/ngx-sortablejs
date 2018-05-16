@@ -212,17 +212,7 @@ imports: [
 
 This value will be used as a default one, but it can be overwritten by a local `sortablejsOptions` property.
 
-## How it works
-
-The model is automatically updated because you pass the `items` as `<div [sortablejs]="items">`. The `items` variable can be either an ordinary JavaScript array or a reactive forms `FormArray`.
-
-If you won't pass anything, e.g. `<div sortablejs>`, the items won't be automatically updated, thus you should take care of updating the array on your own using standard `Sortable.js` events.
-
-Original events `onAdd`, `onRemove`, `onUpdate` are intercepted by the library in order to reflect the sortable changes into the data. If you will add your own event handlers (inside of the options object) they will be called right after the data binding is done. If you don't pass the data, e.g. `<div sortablejs>` the data binding is skipped and only your event handlers will be fired.
-
-Important: the original `onAdd` event happens before the `onRemove` event because the original library makes it like that. We change this behavior and call 'onAdd' after the 'onRemove'. If you want to work with original onAdd event you can use `onAddOriginal` which happens before `onRemove`.
-
-## Angular Material troubleshooting
+## Angular Material specifics
 
 ### Ripple effect
 
@@ -248,6 +238,16 @@ There are two solutions:
   </a>
 </div>
 ```
+
+## How it works
+
+The model is automatically updated because you pass the `items` as `<div [sortablejs]="items">`. The `items` variable can be either an ordinary JavaScript array or a reactive forms `FormArray`.
+
+If you won't pass anything, e.g. `<div sortablejs>`, the items won't be automatically updated, thus you should take care of updating the array on your own using standard `Sortable.js` events.
+
+Original events `onAdd`, `onRemove`, `onUpdate` are intercepted by the library in order to reflect the sortable changes into the data. If you will add your own event handlers (inside of the options object) they will be called right after the data binding is done. If you don't pass the data, e.g. `<div sortablejs>` the data binding is skipped and only your event handlers will be fired.
+
+Important: the original `onAdd` event happens before the `onRemove` event because the original library makes it like that. We change this behavior and call 'onAdd' after the 'onRemove'. If you want to work with original onAdd event you can use `onAddOriginal` which happens before `onRemove`.
 
 ## SystemJS configuration
 
