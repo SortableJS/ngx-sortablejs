@@ -222,6 +222,33 @@ Original events `onAdd`, `onRemove`, `onUpdate` are intercepted by the library i
 
 Important: the original `onAdd` event happens before the `onRemove` event because the original library makes it like that. We change this behavior and call 'onAdd' after the 'onRemove'. If you want to work with original onAdd event you can use `onAddOriginal` which happens before `onRemove`.
 
+## Angular Material troubleshooting
+
+### Ripple effect
+
+The elements with ripple effect like `mat-list-item` are affected. The dragging is broken because there is a [div created right under the cursor](https://github.com/angular/material2/blob/master/src/lib/core/ripple/ripple-renderer.ts#L142) and the webkit has no idea what to do with it.
+
+There are two solutions:
+
+1. Disable the ripple effect
+
+```ts
+<a mat-list-item [disableRipple]="true">
+```
+
+2. Use `handle` property and block propagation of `mousedown` and `touchstart` events on the handler to prevent ripple.
+
+```ts
+<div [sortablejs]="..." [sortablejsOptions]="{ handle: '.handle' }">
+  <a mat-list-item *ngFor="let a of b" [routerLink]="..." routerLinkActive="active">
+    <mat-icon matListIcon 
+              class="handle"
+              (mousedown)="$event.stopPropagation()" 
+              (touchstart)="$event.stopPropagation()">drag_handle</mat-icon> {{ a }}
+  </a>
+</div>
+```
+
 ## SystemJS configuration
 
 **IMPORTANT:** Follow this only if you have SystemJS. If you have no errors without this step - most likely you don't need it!
