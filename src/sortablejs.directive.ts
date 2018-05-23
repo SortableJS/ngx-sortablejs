@@ -39,6 +39,9 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
   @Input() runInsideAngular = false;
 
+  @Input('sortablejsContainerClass')
+  containerClass: string;
+
   constructor(
     @Optional() @Inject(GLOBALS) private globalConfig: SortablejsOptions,
     private service: SortablejsService,
@@ -49,11 +52,19 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   ) {}
 
   public ngOnInit() {
+
+    let targetElement;
+    if (this.containerClass) {
+      targetElement = this.element.nativeElement.getElementsByClassName(this.containerClass)[0];
+    } else {
+      targetElement = this.element.nativeElement;
+    }
+
     if (this.runInsideAngular) {
-      this._sortable = OriginalSortable.create(this.element.nativeElement, this.options);
+      this._sortable = OriginalSortable.create(targetElement, this.options);
     } else {
       this.zone.runOutsideAngular(() => {
-        this._sortable = OriginalSortable.create(this.element.nativeElement, this.options);
+        this._sortable = OriginalSortable.create(targetElement, this.options);
       });
     }
   }
