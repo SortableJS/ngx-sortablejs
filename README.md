@@ -6,6 +6,8 @@ This package is an Angular 2+ binding for [Sortable.js](https://github.com/RubaX
 
 See the library in action in a [demo](https://smnbbrv.github.io/angular-sortablejs-demo/sortable-array) project (based on the Angular CLI). The source code for all the examples could be found [here](https://github.com/smnbbrv/angular-sortablejs-demo).
 
+Trees are also supported: [tree with fake root element (\*ngFor once, root can also be hidden anyway)](https://stackblitz.com/edit/angular-o1pq84) or [without (\*ngFor 2 times)](https://stackblitz.com/edit/angular-ptu94s).
+
 ## Installation
 
 Angular >= 4.x (angular-sortablejs@2.x.x; sortablejs must be installed separately)
