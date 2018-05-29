@@ -7,6 +7,7 @@ export interface SortablejsOptions {
   };
   sort?: boolean;
   delay?: number;
+  touchStartThreshold?: number;
   disabled?: boolean;
   store?: {
     get: (sortable: any) => any[];
