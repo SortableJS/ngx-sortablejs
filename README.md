@@ -10,16 +10,8 @@ Trees are also supported: [tree with fake root element (\*ngFor once, root can a
 
 ## Installation
 
-Angular >= 4.x (angular-sortablejs@2.x.x; sortablejs must be installed separately)
-
 ```sh
-npm install --save sortablejs && npm install --save angular-sortablejs
-```
-
-Angular 2.x (angular-sortablejs@1.x.x; sortablejs is included)
-
-```sh
-npm install --save angular-sortablejs@1.3.1
+npm i sortablejs angular-sortablejs
 ```
 
 You are configured now. If you use Webpack or Angular CLI go to the usage. If you have SystemJS, that's sad, but you can go to the end of the document to find configuration steps there.
@@ -233,9 +225,9 @@ There are two solutions:
 ```ts
 <div [sortablejs]="..." [sortablejsOptions]="{ handle: '.handle' }">
   <a mat-list-item *ngFor="let a of b" [routerLink]="..." routerLinkActive="active">
-    <mat-icon matListIcon 
+    <mat-icon matListIcon
               class="handle"
-              (mousedown)="$event.stopPropagation()" 
+              (mousedown)="$event.stopPropagation()"
               (touchstart)="$event.stopPropagation()">drag_handle</mat-icon> {{ a }}
   </a>
 </div>
