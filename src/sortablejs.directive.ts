@@ -97,11 +97,11 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   private proxyEvent(eventName: string, ...params: any[]) {
-    if (this.optionsWithoutEvents && this.optionsWithoutEvents[eventName]) {
-      this.optionsWithoutEvents[eventName](...params);
-    }
-
-    this.detectChanges();
+    this.zone.run(() => {
+      if (this.optionsWithoutEvents && this.optionsWithoutEvents[eventName]) {
+        this.optionsWithoutEvents[eventName](...params);
+      }
+    });
   }
 
   private get isCloning() {
@@ -111,12 +111,6 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   private clone<T>(item: T): T {
     // by default pass the item through, no cloning performed
     return (this.inputCloneFunction || (_item => _item))(item);
-  }
-
-  private detectChanges() {
-    // we must detect changes on all the components
-    // as a side effect of running outside angular zone
-    this.applicationRef.tick();
   }
 
   private get overridenOptions(): SortablejsOptions {
