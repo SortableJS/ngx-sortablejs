@@ -1,23 +1,9 @@
-import {
-  ApplicationRef,
-  Directive,
-  ElementRef,
-  Inject,
-  Input,
-  NgZone,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Optional,
-  Renderer2,
-  SimpleChange,
-  SimpleChanges
-} from '@angular/core';
-import { SortablejsOptions } from './sortablejs-options';
+import { Directive, ElementRef, Inject, Input, NgZone, OnChanges, OnDestroy, OnInit, Optional, Renderer2, SimpleChange, SimpleChanges } from '@angular/core';
 import { GLOBALS } from './globals';
-import { SortablejsService } from './sortablejs.service';
 import { SortablejsBindingTarget } from './sortablejs-binding-target';
 import { SortablejsBindings } from './sortablejs-bindings';
+import { SortablejsOptions } from './sortablejs-options';
+import { SortablejsService } from './sortablejs.service';
 
 const OriginalSortable: any = require('sortablejs');
 
@@ -44,7 +30,6 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     private service: SortablejsService,
     private element: ElementRef,
     private zone: NgZone,
-    private applicationRef: ApplicationRef,
     private renderer: Renderer2,
   ) {}
 
@@ -97,7 +82,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   private proxyEvent(eventName: string, ...params: any[]) {
-    this.zone.run(() => {
+    this.zone.run(() => { // re-entering zone, see https://github.com/SortableJS/angular-sortablejs/issues/110#issuecomment-408874600
       if (this.optionsWithoutEvents && this.optionsWithoutEvents[eventName]) {
         this.optionsWithoutEvents[eventName](...params);
       }
