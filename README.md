@@ -175,7 +175,7 @@ import { SortablejsOptions } from 'angular-sortablejs';
 })
 export class AppComponent {
 
-  myCloneImplementation(item) {
+  myCloneImplementation = (item) => {
     return item; // this is what happens if sortablejsCloneFunction is not provided. Add your stuff here
   }
 
