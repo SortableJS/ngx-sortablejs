@@ -1,3 +1,5 @@
+import { SortableEvent } from './sortable-event';
+
 export interface SortablejsOptions {
   group?: string | {
     name?: string;
@@ -31,12 +33,12 @@ export interface SortablejsOptions {
   fallbackTolerance?: number;
   setData?: (dataTransfer: any, draggedElement: any) => any;
   onStart?: (event: any) => any;
-  onEnd?: (event: any) => any;
-  onAdd?: (event: any) => any;
-  onAddOriginal?: (event: any) => any;
-  onUpdate?: (event: any) => any;
-  onSort?: (event: any) => any;
-  onRemove?: (event: any) => any;
+  onEnd?: (event: SortableEvent) => any;
+  onAdd?: (event: SortableEvent) => any;
+  onAddOriginal?: (event: SortableEvent) => any;
+  onUpdate?: (event: SortableEvent) => any;
+  onSort?: (event: SortableEvent) => any;
+  onRemove?: (event: SortableEvent) => any;
   onFilter?: (event: any) => any;
   onMove?: (event: any) => boolean;
   scrollFn?: (offsetX: any, offsetY: any, originalEvent: any) => any;

@@ -87,7 +87,7 @@ You can use the options' `onUpdate` method to track the changes (see also *Passi
 ```ts
 constructor() {
   this.options = {
-    onUpdate: (event: any) => {
+    onUpdate: (event: SortableEvent) => {
       this.postChangesToServer();
     }
   };

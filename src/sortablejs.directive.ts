@@ -4,6 +4,7 @@ import { SortablejsBindingTarget } from './sortablejs-binding-target';
 import { SortablejsBindings } from './sortablejs-bindings';
 import { SortablejsOptions } from './sortablejs-options';
 import { SortablejsService } from './sortablejs.service';
+import { SortableEvent } from './sortable-event';
 
 const OriginalSortable: any = require('sortablejs');
 
@@ -148,4 +149,3 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
 }
 
-interface SortableEvent { oldIndex: number; newIndex: number; item: HTMLElement; clone: HTMLElement }
