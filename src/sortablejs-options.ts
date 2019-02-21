@@ -20,6 +20,10 @@ export interface SortablejsOptions {
   ghostClass?: string;
   chosenClass?: string;
   dataIdAttr?: string;
+  swapThreshold?: number;
+  invertSwap?: boolean;
+  invertedSwapThreshold?: number;
+  direction?: string;
   forceFallback?: boolean;
   fallbackClass?: string;
   fallbackOnBody?: boolean;
