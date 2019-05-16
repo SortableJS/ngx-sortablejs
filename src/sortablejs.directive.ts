@@ -34,6 +34,14 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   ) {}
 
   public ngOnInit() {
+
+    // the original sortablejs was loaded correctly, i.e. the object exists and create() is a valid function
+    // this check ensures compatibility with angular universal (server side rendering)
+    if (!OriginalSortable || !OriginalSortable.create ||
+      !(OriginalSortable.create && OriginalSortable.create.constructor && OriginalSortable.create.call && OriginalSortable.create.apply)) {
+      return;
+    }
+
     if (this.runInsideAngular) {
       this._sortable = OriginalSortable.create(this.element.nativeElement, this.options);
     } else {
