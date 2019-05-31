@@ -15,7 +15,8 @@
     "e2e": "ng e2e",
     "validate-release": "npm run lint && npm run test:app:ci && npm run test:lib:ci",
     "prepare-release": "npm run build:lib && cp README.md dist/ngx-sortablejs && cp LICENSE.md dist/ngx-sortablejs && npm run build:app && cp dist/ngx-sortablejs-app/index.html dist/ngx-sortablejs-app/404.html",
-    "release": "npm run validate-release && npm rum prepare-release && semantic-release"
+    "release": "npm run validate-release && npm run prepare-release && semantic-release -d",
+    "release:apply": "npm run validate-release && npm run prepare-release && semantic-release --ci false"
   },
   "private": true,
   "dependencies": {
