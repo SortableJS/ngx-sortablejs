@@ -2,7 +2,7 @@ import { SortablejsBindingTarget } from './sortablejs-binding-target';
 
 export class SortablejsBinding {
 
-  constructor(private target: SortablejsBindingTarget) {}
+  constructor(private target: SortablejsBindingTarget) { }
 
   insert(index: number, item: any) {
     if (this.isFormArray) {

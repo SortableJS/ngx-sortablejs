@@ -1,31 +1,30 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
+    "declaration": false,
+    "module": "esnext",
+    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "skipDefaultLibCheck": true,
-    "preserveConstEnums": true,
-    "removeComments": true,
-    "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true,
-    "strictNullChecks": false,
-    "allowSyntheticDefaultImports": true,
-    "declaration": true,
-    "pretty": true,
-    "outDir": "./dist",
-    "types": [
-      "node",
-      "systemjs"
-    ]
-  },
-  "files": [
-    "./index.ts"
-  ],
-  "exclude": [
-    "node_modules/",
-    "dist/"
-  ]
+    "importHelpers": true,
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "ngx-sortablejs": [
+        "dist/ngx-sortablejs"
+      ],
+      "ngx-sortablejs/*": [
+        "dist/ngx-sortablejs/*"
+      ]
+    }
+  }
 }

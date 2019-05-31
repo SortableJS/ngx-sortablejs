@@ -1,29 +1,29 @@
-import { Directive, ElementRef, Inject, Input, NgZone, OnChanges, OnDestroy, OnInit, Optional, Renderer2, SimpleChange, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, Inject, Input, NgZone, OnChanges, OnDestroy, OnInit, Optional, Renderer2, SimpleChange } from '@angular/core';
 import { GLOBALS } from './globals';
 import { SortablejsBindingTarget } from './sortablejs-binding-target';
 import { SortablejsBindings } from './sortablejs-bindings';
 import { SortablejsOptions } from './sortablejs-options';
 import { SortablejsService } from './sortablejs.service';
 
-const OriginalSortable: any = require('sortablejs');
+const Sortable: any = require('sortablejs');
 
 @Directive({
-  selector: '[sortablejs]'
+  selector: '[sortablejs]',
 })
 export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
   @Input()
   sortablejs: SortablejsBindingTarget; // array or a FormArray
 
-  @Input('sortablejsOptions')
-  inputOptions: SortablejsOptions;
+  @Input()
+  sortablejsOptions: SortablejsOptions;
 
-  @Input('sortablejsCloneFunction')
-  inputCloneFunction: <T>(item: T) => T;
+  @Input()
+  sortablejsCloneFunction: <T>(item: T) => T;
 
-  private _sortable: any;
+  private sortableInstance: any;
 
-  @Input() runInsideAngular = false;
+  @Input() runInsideAngular = false; // to be deprecated
 
   constructor(
     @Optional() @Inject(GLOBALS) private globalConfig: SortablejsOptions,
@@ -31,35 +31,39 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     private element: ElementRef,
     private zone: NgZone,
     private renderer: Renderer2,
-  ) {}
+  ) { }
 
   public ngOnInit() {
-    if (this.runInsideAngular) {
-      this._sortable = OriginalSortable.create(this.element.nativeElement, this.options);
-    } else {
-      this.zone.runOutsideAngular(() => {
-        this._sortable = OriginalSortable.create(this.element.nativeElement, this.options);
-      });
+    if (Sortable && Sortable.create) { // Sortable does not exist in angular univarsal (SSR)
+      if (this.runInsideAngular) {
+        this.sortableInstance = Sortable.create(this.element.nativeElement, this.options);
+      } else {
+        this.zone.runOutsideAngular(() => {
+          this.sortableInstance = Sortable.create(this.element.nativeElement, this.options);
+        });
+      }
     }
   }
 
-  public ngOnChanges(changes: SimpleChanges) {
-    const optionsChange: SimpleChange = changes['inputOptions'];
+  public ngOnChanges(changes: { [prop in keyof SortablejsDirective]: SimpleChange }) {
+    const optionsChange: SimpleChange = changes.sortablejsOptions;
+
     if (optionsChange && !optionsChange.isFirstChange()) {
       const previousOptions: SortablejsOptions = optionsChange.previousValue;
       const currentOptions: SortablejsOptions = optionsChange.currentValue;
+
       Object.keys(currentOptions).forEach(optionName => {
         if (currentOptions[optionName] !== previousOptions[optionName]) {
           // use low-level option setter
-          this._sortable.option(optionName, this.options[optionName]);
+          this.sortableInstance.option(optionName, this.options[optionName]);
         }
       });
     }
   }
 
   public ngOnDestroy() {
-    if (this._sortable) {
-      this._sortable.destroy();
+    if (this.sortableInstance) {
+      this.sortableInstance.destroy();
     }
   }
 
@@ -78,7 +82,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   private get optionsWithoutEvents() {
-    return { ...(this.globalConfig || {}), ...(this.inputOptions || {})};
+    return { ...(this.globalConfig || {}), ...(this.sortablejsOptions || {}) };
   }
 
   private proxyEvent(eventName: string, ...params: any[]) {
@@ -90,12 +94,12 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   private get isCloning() {
-    return this._sortable.options.group.checkPull(this._sortable, this._sortable) === 'clone';
+    return this.sortableInstance.options.group.checkPull(this.sortableInstance, this.sortableInstance) === 'clone';
   }
 
   private clone<T>(item: T): T {
     // by default pass the item through, no cloning performed
-    return (this.inputCloneFunction || (_item => _item))(item);
+    return (this.sortablejsCloneFunction || (subitem => subitem))(item);
   }
 
   private get overridenOptions(): SortablejsOptions {
@@ -148,4 +152,4 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
 }
 
-interface SortableEvent { oldIndex: number; newIndex: number; item: HTMLElement; clone: HTMLElement }
+interface SortableEvent { oldIndex: number; newIndex: number; item: HTMLElement; clone: HTMLElement; }

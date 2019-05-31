@@ -1,0 +1,25 @@
+{
+  "name": "ngx-sortablejs",
+  "keywords": [
+    "ngx-sortablejs",
+    "angular-sortablejs",
+    "sortablejs",
+    "angular",
+    "sortable",
+    "draggable"
+  ],
+  "author": "smnbbrv",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sortablejs/ngx-sortablejs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@angular/common": "^8.0.0",
+    "@angular/core": "^8.0.0",
+    "sortablejs": ">=1.7.0"
+  }
+}

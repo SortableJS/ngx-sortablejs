@@ -1,4 +1,4 @@
-# angular-sortablejs
+# ngx-sortablejs
 
 This package is an Angular 2+ binding for [Sortable.js](https://github.com/RubaXa/Sortable). Supports standard arrays and Angular `FormArray`.
 
@@ -11,7 +11,7 @@ Trees are also supported: [tree with fake root element (\*ngFor once, root can a
 ## Installation
 
 ```sh
-npm i sortablejs angular-sortablejs
+npm i ngx-sortablejs sortablejs
 ```
 
 You are configured now. If you use Webpack or Angular CLI go to the usage. If you have SystemJS, that's sad, but you can go to the end of the document to find configuration steps there.
@@ -123,7 +123,7 @@ The only thing which should be done is assigning the `group` option to the both 
 
 ```typescript
 import { Component } from '@angular/core';
-import { SortablejsOptions } from 'angular-sortablejs';
+import { SortablejsOptions } from 'ngx-sortablejs';
 
 @Component({
     selector: 'my-app',
@@ -151,13 +151,13 @@ export class AppComponent {
 
 ### Drag & drop between two lists: clone mode
 
-The clone mode is similar to the one above (of course the proper Sortablejs settings should be used; see demo). The only important thing is that the `angular-sortablejs` does clone the HTML element but **does not clone the variable** (or `FormControl` in case of `FormArray` input). By default the variable will be taken as is: a primitive will be copied, an object will be referenced.
+The clone mode is similar to the one above (of course the proper Sortablejs settings should be used; see demo). The only important thing is that the `ngx-sortablejs` does clone the HTML element but **does not clone the variable** (or `FormControl` in case of `FormArray` input). By default the variable will be taken as is: a primitive will be copied, an object will be referenced.
 
 If you want to clone the item being sorted in a different manner, you can provide `sortablejsCloneFunction` as a parameter. This function receives an item and should return a clone of that item.
 
 ```typescript
 import { Component } from '@angular/core';
-import { SortablejsOptions } from 'angular-sortablejs';
+import { SortablejsOptions } from 'ngx-sortablejs';
 
 @Component({
     selector: 'my-app',
@@ -243,33 +243,6 @@ Original events `onAdd`, `onRemove`, `onUpdate` are intercepted by the library i
 
 Important: the original `onAdd` event happens before the `onRemove` event because the original library makes it like that. We change this behavior and call 'onAdd' after the 'onRemove'. If you want to work with original onAdd event you can use `onAddOriginal` which happens before `onRemove`.
 
-## SystemJS configuration
+## License
 
-**IMPORTANT:** Follow this only if you have SystemJS. If you have no errors without this step - most likely you don't need it!
-
-Adapt your `systemjs.config.js` (or another place where you configure SystemJS) file with the following:
-
-```javascript
-// ...
-var map = {
-  // ...
-  'angular-sortablejs': 'node_modules/angular-sortablejs/dist/',
-  'sortablejs/Sortable.min': 'node_modules/sortablejs/Sortable.min.js',
-  // ...
-};
-// ...
-var packages = {
-  // ...
-  'angular-sortablejs': { main: 'index.js', defaultExtension: 'js' },
-  // ...
-};
-// ...
-var config = {
-  map: map,
-  packages: packages
-};
-
-System.config(config);
-```
-
-This is important to let SystemJS know everything it needs about the dependencies it needs to load.
+MIT

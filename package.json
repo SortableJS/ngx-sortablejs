@@ -1,58 +1,64 @@
 {
-  "name": "angular-sortablejs",
-  "version": "2.7.0",
-  "description": "SortableJS for Angular",
-  "main": "./dist/index.js",
-  "typings": "./dist/index",
+  "name": "ngx-sortablejs-app",
+  "version": "0.0.0",
   "scripts": {
-    "start": "watch 'npm run build-local' src",
-    "build-local": "npm run build && cp -R dist ../angular-sortablejs-demo/node_modules/angular-sortablejs",
-    "build": "rimraf ./dist/* ./codegen/* && ngc -p tsconfig-dist.json",
-    "prepare": "npm run tslint && npm run build",
-    "tslint": "tslint ./app/**/*.ts -t verbose"
+    "ng": "ng",
+    "start": "ng serve",
+    "build:app": "ng build --prod",
+    "build:lib": "ng build ngx-sortablejs",
+    "test:app": "ng test ngx-sortablejs-app",
+    "test:app:ci": "ng test ngx-sortablejs-app --watch=false --progress=false --browsers=ChromeHeadlessCI",
+    "test:lib": "ng test ngx-sortablejs",
+    "test:lib:ci": "ng test ngx-sortablejs --watch=false --progress=false --browsers=ChromeHeadlessCI --code-coverage",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "validate-release": "npm run lint && npm run test:app:ci && npm run test:lib:ci",
+    "prepare-release": "npm run build:lib && cp README.md dist/ngx-sortablejs && cp LICENSE.md dist/ngx-sortablejs && npm run build:app && cp dist/ngx-sortablejs-app/index.html dist/ngx-sortablejs-app/404.html",
+    "release": "npm run validate-release && npm rum prepare-release && semantic-release"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SortableJS/angular-sortablejs.git"
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~8.0.0",
+    "@angular/common": "~8.0.0",
+    "@angular/compiler": "~8.0.0",
+    "@angular/core": "~8.0.0",
+    "@angular/forms": "~8.0.0",
+    "@angular/platform-browser": "~8.0.0",
+    "@angular/platform-browser-dynamic": "~8.0.0",
+    "@angular/router": "~8.0.0",
+    "rxjs": "~6.4.0",
+    "sortablejs": "^1.9.0",
+    "tslib": "^1.9.0",
+    "zone.js": "~0.9.1"
   },
-  "keywords": [
-    "angular2-sortable",
-    "angular2-sortablejs",
-    "angular-sortable",
-    "angular-sortablejs",
-    "ng2-sortable",
-    "ng2-sortablejs",
-    "ng-sortable",
-    "ng-sortablejs"
-  ],
-  "author": "smnbbrv",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/SortableJS/angular-sortablejs/issues"
-  },
-  "homepage": "https://github.com/SortableJS/angular-sortablejs#readme",
   "devDependencies": {
-    "@angular/compiler": "4.0.1",
-    "@angular/compiler-cli": "4.0.1",
-    "@angular/core": "4.0.1",
-    "@types/node": "7.0.12",
-    "@types/systemjs": "0.20.2",
-    "git-validate": "2.2.2",
-    "rimraf": "2.6.1",
-    "rxjs": "^5.5.2",
-    "sortablejs": "^1.5.1",
-    "tslint": "5.1.0",
-    "typescript": "2.2.2",
-    "watch": "^1.0.2"
-  },
-  "peerDependencies": {
-    "sortablejs": ">=1.5.1",
-    "@angular/core": ">=4.0.0"
-  },
-  "files": [
-    "dist/"
-  ],
-  "pre-commit": [
-    "tslint"
-  ]
+    "@angular-devkit/build-angular": "~0.800.0",
+    "@angular-devkit/build-ng-packagr": "~0.800.0",
+    "@angular/cli": "~8.0.0",
+    "@angular/compiler-cli": "~8.0.0",
+    "@angular/language-service": "~8.0.0",
+    "@semantic-release/changelog": "^3.0.2",
+    "@semantic-release/git": "^7.0.8",
+    "@types/jasmine": "~3.3.8",
+    "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^8.9.5",
+    "codelyzer": "^5.0.0",
+    "coveralls": "^3.0.3",
+    "jasmine-core": "~3.4.0",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~4.1.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-jasmine": "~2.0.1",
+    "karma-jasmine-html-reporter": "^1.4.0",
+    "ng-packagr": "^5.1.0",
+    "ngx-spec": "^2.1.4",
+    "protractor": "~5.4.0",
+    "semantic-release": "^15.13.12",
+    "ts-node": "~7.0.0",
+    "tsickle": "^0.35.0",
+    "tslint": "~5.15.0",
+    "typescript": "~3.4.3"
+  }
 }
