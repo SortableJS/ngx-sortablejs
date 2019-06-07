@@ -42,7 +42,12 @@ imports: [
 
 Then use `sortablejs` property on a container HTML element to tell Angular that this is a sortable container; also pass the `items` array to both `*ngFor` and `[sortablejs]` to register the changes automatically.
 
-Of you want to get the sortable instance, use `(sortablejsInit)="sortableInstance = $event"`.
+## Directive API
+
+- `sortablejs` - directive, accepts model to be auto-updated (see examples below)
+- `sortablejsContainer` - directive input, CSS selector for the sortable container, string. Mostly required for frameworks that wrap the content into the elements where it is impossible to access the real container element (e.g. @angular/material). Example: `sortablejsContainer=".mat-grid-list"`
+- `sortablejsOptions` - directive input, sortable options to pass in. Please note that in order to change the options later the whole object needs to be recreated, see below
+- `sortablejsInit` - directive output, returns the current Sortable instance. Example: `(sortablejsInit)="sortableInstance = $event"`
 
 ## Simple sortable list
 

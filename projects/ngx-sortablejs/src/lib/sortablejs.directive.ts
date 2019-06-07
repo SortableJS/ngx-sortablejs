@@ -17,6 +17,9 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   sortablejs: SortablejsBindingTarget; // array or a FormArray
 
   @Input()
+  sortablejsContainer: string;
+
+  @Input()
   sortablejsOptions: SortablejsOptions;
 
   @Input()
@@ -39,11 +42,9 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     if (Sortable && Sortable.create) { // Sortable does not exist in angular universal (SSR)
       if (this.runInsideAngular) {
-        this.sortablejsInit.emit(this.sortableInstance = Sortable.create(this.element.nativeElement, this.options));
+        this.create();
       } else {
-        this.zone.runOutsideAngular(() => {
-          this.sortablejsInit.emit(this.sortableInstance = Sortable.create(this.element.nativeElement, this.options));
-        });
+        this.zone.runOutsideAngular(() => this.create());
       }
     }
   }
@@ -68,6 +69,15 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     if (this.sortableInstance) {
       this.sortableInstance.destroy();
     }
+  }
+
+  private create() {
+    const container = this.sortablejsContainer ? this.element.nativeElement : this.element.nativeElement.querySelector(this.sortablejsContainer);
+
+    setTimeout(() => {
+      this.sortableInstance = Sortable.create(container, this.options);
+      this.sortablejsInit.emit(this.sortableInstance);
+    }, 0);
   }
 
   private getBindings(): SortablejsBindings {
