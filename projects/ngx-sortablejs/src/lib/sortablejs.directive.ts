@@ -72,7 +72,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   private create() {
-    const container = this.sortablejsContainer ? this.element.nativeElement : this.element.nativeElement.querySelector(this.sortablejsContainer);
+    const container = this.sortablejsContainer ? this.element.nativeElement.querySelector(this.sortablejsContainer) : this.element.nativeElement;
 
     setTimeout(() => {
       this.sortableInstance = Sortable.create(container, this.options);
