@@ -42,6 +42,8 @@ imports: [
 
 Then use `sortablejs` property on a container HTML element to tell Angular that this is a sortable container; also pass the `items` array to both `*ngFor` and `[sortablejs]` to register the changes automatically.
 
+Of you want to get the sortable instance, use `(sortablejsInit)="sortableInstance = $event"`.
+
 ## Simple sortable list
 
 ```typescript

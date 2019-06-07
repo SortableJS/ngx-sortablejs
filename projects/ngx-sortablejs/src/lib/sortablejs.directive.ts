@@ -1,4 +1,5 @@
-import { Directive, ElementRef, Inject, Input, NgZone, OnChanges, OnDestroy, OnInit, Optional, Renderer2, SimpleChange } from '@angular/core';
+import { Directive, ElementRef, Inject, Input, NgZone, OnChanges, OnDestroy, OnInit, Optional, Output, Renderer2, SimpleChange } from '@angular/core';
+import { EventEmitter } from 'events';
 import { GLOBALS } from './globals';
 import { SortablejsBindingTarget } from './sortablejs-binding-target';
 import { SortablejsBindings } from './sortablejs-bindings';
@@ -25,6 +26,8 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
   @Input() runInsideAngular = false; // to be deprecated
 
+  @Output() sortablejsInit = new EventEmitter();
+
   constructor(
     @Optional() @Inject(GLOBALS) private globalConfig: SortablejsOptions,
     private service: SortablejsService,
@@ -33,19 +36,19 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     private renderer: Renderer2,
   ) { }
 
-  public ngOnInit() {
-    if (Sortable && Sortable.create) { // Sortable does not exist in angular univarsal (SSR)
+  ngOnInit() {
+    if (Sortable && Sortable.create) { // Sortable does not exist in angular universal (SSR)
       if (this.runInsideAngular) {
-        this.sortableInstance = Sortable.create(this.element.nativeElement, this.options);
+        this.sortablejsInit.emit(this.sortableInstance = Sortable.create(this.element.nativeElement, this.options));
       } else {
         this.zone.runOutsideAngular(() => {
-          this.sortableInstance = Sortable.create(this.element.nativeElement, this.options);
+          this.sortablejsInit.emit(this.sortableInstance = Sortable.create(this.element.nativeElement, this.options));
         });
       }
     }
   }
 
-  public ngOnChanges(changes: { [prop in keyof SortablejsDirective]: SimpleChange }) {
+  ngOnChanges(changes: { [prop in keyof SortablejsDirective]: SimpleChange }) {
     const optionsChange: SimpleChange = changes.sortablejsOptions;
 
     if (optionsChange && !optionsChange.isFirstChange()) {
@@ -61,7 +64,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  public ngOnDestroy() {
+  ngOnDestroy() {
     if (this.sortableInstance) {
       this.sortableInstance.destroy();
     }
