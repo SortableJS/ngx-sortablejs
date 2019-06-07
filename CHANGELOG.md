@@ -1,3 +1,10 @@
+## [3.1.1](https://github.com/SortableJS/angular-sortablejs/compare/v3.1.0...v3.1.1) (2019-06-07)
+
+
+### Bug Fixes
+
+* not being able to create sortable, fix [#162](https://github.com/SortableJS/angular-sortablejs/issues/162) ([5a62f02](https://github.com/SortableJS/angular-sortablejs/commit/5a62f02))
+
 # [3.1.0](https://github.com/SortableJS/angular-sortablejs/compare/v3.0.0...v3.1.0) (2019-06-07)
 
 
