@@ -1,3 +1,11 @@
+# [3.1.0](https://github.com/SortableJS/angular-sortablejs/compare/v3.0.0...v3.1.0) (2019-06-07)
+
+
+### Features
+
+* add configuration for container selector (sortablejsContainer), implement [#60](https://github.com/SortableJS/angular-sortablejs/issues/60) ([1c1ebd4](https://github.com/SortableJS/angular-sortablejs/commit/1c1ebd4))
+* add sortablejsInit event, implement [#161](https://github.com/SortableJS/angular-sortablejs/issues/161) ([7d81b55](https://github.com/SortableJS/angular-sortablejs/commit/7d81b55))
+
 # [3.0.0](https://github.com/SortableJS/angular-sortablejs/compare/v2.7.0...v3.0.0) (2019-05-31)
 
 
