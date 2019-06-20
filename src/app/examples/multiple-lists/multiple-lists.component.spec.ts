@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { SortablejsModule } from 'ngx-sortablejs';
 import { MultipleListsComponent } from './multiple-lists.component';
 
 describe('MultipleListsComponent', () => {
@@ -8,6 +9,9 @@ describe('MultipleListsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MultipleListsComponent],
+      imports: [
+        SortablejsModule,
+      ],
     })
       .compileComponents();
   }));

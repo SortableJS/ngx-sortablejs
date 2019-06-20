@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { SortablejsModule } from 'ngx-sortablejs';
 import { SortableWithOptionsComponent } from './sortable-with-options.component';
 
 describe('SortableWithOptionsComponent', () => {
@@ -8,6 +9,9 @@ describe('SortableWithOptionsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SortableWithOptionsComponent],
+      imports: [
+        SortablejsModule,
+      ],
     })
       .compileComponents();
   }));
