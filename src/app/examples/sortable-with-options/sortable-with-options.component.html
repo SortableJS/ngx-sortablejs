@@ -1,0 +1,64 @@
+<h1>Custom options</h1>
+
+<p class="lead">
+  <strong>
+    <a href="https://github.com/smnbbrv/ngx-sortablejs-demo/tree/master/src/app/examples/sortable-with-options"
+      target="_blank">The source code</a>
+  </strong>
+</p>
+
+This example shows how the various options could be used in order to configure <em>Sortablejs</em>.
+
+<h2 class="mt-4 mb-3">Disabled options</h2>
+
+<ul class="list-group" [sortablejs]="draggableItems" [sortablejsOptions]="draggableOptions">
+  <li class="list-group-item" *ngFor="let item of draggableItems" [class.draggable]="item.draggable"
+    [class.disabled]="!item.draggable">
+    Element {{ item.text }}
+  </li>
+</ul>
+
+<p class="my-3">and the actual model is</p>
+
+<div class="alert alert-dark">
+  > {{ draggableItems | json }}
+</div>
+
+<h2 class="mt-4 mb-3">Events</h2>
+
+<p class="my-3">
+  Binding to the events is easy. Any even could be attached as a property of <em>Sortablejs</em>.
+  The example below binds to the <em>onUpdate</em> event. Drag the items and track the amount of updates.
+</p>
+
+<div class="alert alert-dark">
+  > Updated {{ eventUpdateCounter }} times
+</div>
+
+<ul class="list-group" [sortablejs]="eventItems" [sortablejsOptions]="eventOptions">
+  <li class="list-group-item" *ngFor="let item of eventItems">
+    Element {{ item }}
+  </li>
+</ul>
+
+<div class="alert alert-info my-3">
+  Hint: for the <em>FormArray</em> using <em>onUpdate</em> is kinda overhead because the <em>FormArray.valueChanges</em>
+  provides an event on every change.
+</div>
+
+<h2 class="mt-4 mb-3">Autoscroll with fixed navbar</h2>
+
+<p>
+  Normally the scrolling that is performed by <em>Sortablejs</em> is working fine.
+  However with a fixed navbar it may cause problems.
+</p>
+
+<p>
+  Setting the <em>scrollSensitivity</em> to the proper value will solve the problem. Try it on the long list below
+</p>
+
+<ul class="list-group" [sortablejs]="scrollableItems" [sortablejsOptions]="scrollableOptions">
+  <li class="list-group-item" *ngFor="let item of scrollableItems">
+    Element {{ item }}
+  </li>
+</ul>

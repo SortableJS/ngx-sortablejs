@@ -1,0 +1,57 @@
+<h1>Sortable Array</h1>
+
+<p class="lead">
+  <strong>
+    <a href="https://github.com/smnbbrv/ngx-sortablejs-demo/tree/master/src/app/examples/simple-sortable"
+      target="_blank">The source code</a>
+  </strong>
+</p>
+
+The examples below shows various bootstrap.css elements that can be <em>sortable</em>.
+
+They share the same model that's why every time you drag / drop the element all others get updated.
+
+Actually everything can be sortable.
+
+<h2 class="mt-4 mb-3">Button groups</h2>
+
+<div class="clearfix">
+  <div class="btn-group-vertical float-left" [sortablejs]="cities">
+    <button type="button" class="btn btn-secondary" *ngFor="let city of cities">{{ city }}</button>
+  </div>
+
+  <div class="btn-group ml-3" [sortablejs]="cities">
+    <button type="button" class="btn btn-secondary" *ngFor="let city of cities">{{ city }}</button>
+  </div>
+</div>
+
+<h2 class="mt-4 mb-3">Cards</h2>
+
+<div class="row" [sortablejs]="cities">
+  <div class="col-sm-4 my-3" *ngFor="let city of cities">
+    <div class="card">
+      <div class="card-header">{{ city }}</div>
+      <div class="card-body">{{ city }} description</div>
+    </div>
+  </div>
+</div>
+
+<h2 class="mt-4 mb-3">Navigation</h2>
+
+<ul class="nav nav-pills mb-3" [sortablejs]="cities">
+  <li class="nav-item" *ngFor="let city of cities">
+    <a class="nav-link active mr-1">{{ city }}</a>
+  </li>
+</ul>
+
+<nav aria-label="breadcrumb" role="navigation">
+  <ol class="breadcrumb" [sortablejs]="cities">
+    <li class="breadcrumb-item active" *ngFor="let city of cities">{{ city }}</li>
+  </ol>
+</nav>
+
+<h2 class="mt-4 mb-3">The actual model</h2>
+
+<div class="alert alert-dark">
+  > {{ cities | json }}
+</div>

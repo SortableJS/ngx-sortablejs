@@ -1,0 +1,27 @@
+<h1>Sortable Array</h1>
+
+<p class="lead">
+  <strong>
+    <a href="https://github.com/smnbbrv/ngx-sortablejs-demo/tree/master/src/app/examples/sortable-form-array"
+      target="_blank">The source code</a>
+  </strong>
+</p>
+
+<p>
+  Most of the time one wants to sort something more than just data.
+  Complex forms with <em>FormArray</em> controls are also supported.
+</p>
+
+<p>Try to change the text and reorder the inputs</p>
+
+<ul class="list-group" [sortablejs]="citiesControls">
+  <li class="list-group-item" *ngFor="let city of citiesControls.controls">
+    <input class="form-control" [formControl]="city">
+  </li>
+</ul>
+
+<p class="my-3">The actual value of the array</p>
+
+<div class="alert alert-dark">
+  > {{ citiesControls.value | json }}
+</div>

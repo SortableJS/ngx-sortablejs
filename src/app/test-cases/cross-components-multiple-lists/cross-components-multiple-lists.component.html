@@ -1,0 +1,22 @@
+<h1>Connecting multiple sortable lists in different components</h1>
+
+<div class="row">
+  <div class="col-sm-3">
+    <app-child-component [list]="list1"></app-child-component>
+  </div>
+
+  <div class="col-sm-3">
+    <app-child-component [list]="list2"></app-child-component>
+  </div>
+</div>
+
+<p class="my-3">and the actual state is</p>
+
+<div class="row">
+  <div class="col-sm-3">
+    <div class="alert alert-dark">> {{ list1 | json }}</div>
+  </div>
+  <div class="col-sm-3">
+    <div class="alert alert-dark">> {{ list2 | json }}</div>
+  </div>
+</div>
