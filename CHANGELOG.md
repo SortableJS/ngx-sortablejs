@@ -1,3 +1,10 @@
+## [3.1.3](https://github.com/SortableJS/angular-sortablejs/compare/v3.1.2...v3.1.3) (2019-07-09)
+
+
+### Bug Fixes
+
+* adapt for sortablejs@1.10.* changes, fix [#163](https://github.com/SortableJS/angular-sortablejs/issues/163) ([8fe60bc](https://github.com/SortableJS/angular-sortablejs/commit/8fe60bc))
+
 ## [3.1.2](https://github.com/SortableJS/angular-sortablejs/compare/v3.1.1...v3.1.2) (2019-06-19)
 
 
