@@ -1,11 +1,10 @@
 import { Directive, ElementRef, EventEmitter, Inject, Input, NgZone, OnChanges, OnDestroy, OnInit, Optional, Output, Renderer2, SimpleChange } from '@angular/core';
+import Sortable from 'sortablejs';
 import { GLOBALS } from './globals';
 import { SortablejsBindingTarget } from './sortablejs-binding-target';
 import { SortablejsBindings } from './sortablejs-bindings';
 import { SortablejsOptions } from './sortablejs-options';
 import { SortablejsService } from './sortablejs.service';
-
-const Sortable: any = require('sortablejs');
 
 @Directive({
   selector: '[sortablejs]',
