@@ -13,7 +13,7 @@ Trees are also supported: [tree with fake root element (\*ngFor once, root can a
 ## Installation
 
 ```sh
-npm i ngx-sortablejs sortablejs
+npm i ngx-sortablejs sortablejs@~1.9.0
 ```
 
 You are configured now. If you use Webpack or Angular CLI go to the usage. If you have SystemJS, that's sad, but you can go to the end of the document to find configuration steps there.
@@ -216,6 +216,20 @@ imports: [
 This value will be used as a default one, but it can be overwritten by a local `sortablejsOptions` property.
 
 ## Angular Material specifics
+
+### Expansion panel
+
+There is a bug with expansion panel which appears because angular material does not really hide the content of panel, but uses `visibility: hidden`. What we need to do is to actually totally hide it from the DOM instead.
+
+Just add this to your **global** styles
+
+```css
+mat-expansion-panel.sortable-drag .mat-expansion-panel-content {
+  display: none;
+}
+```
+
+and the issue should be resolved.
 
 ### Ripple effect
 
