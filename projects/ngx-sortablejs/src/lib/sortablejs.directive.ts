@@ -155,7 +155,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
       onUpdate: (event: SortableEvent) => {
         const bindings = this.getBindings();
 
-        bindings.injectIntoEvery(event.newIndex, bindings.extractFromEvery(event.oldIndex));
+        bindings.injectIntoEvery(event.newDraggableIndex, bindings.extractFromEvery(event.oldDraggableIndex));
         this.proxyEvent('onUpdate', event);
       },
     };
@@ -163,4 +163,11 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
 }
 
-interface SortableEvent { oldIndex: number; newIndex: number; item: HTMLElement; clone: HTMLElement; }
+interface SortableEvent {
+  oldIndex: number;
+  newIndex: number;
+  oldDraggableIndex: number;
+  newDraggableIndex: number;
+  item: HTMLElement;
+  clone: HTMLElement;
+}
