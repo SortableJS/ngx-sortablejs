@@ -6,6 +6,20 @@ import { SortablejsBindings } from './sortablejs-bindings';
 import { SortablejsOptions } from './sortablejs-options';
 import { SortablejsService } from './sortablejs.service';
 
+const getIndexesFromEvent = (event: SortableEvent) => {
+  if(event.hasOwnProperty('newDraggableIndex') && event.hasOwnProperty('oldDraggableIndex')){
+      return {
+        new: event.newDraggableIndex,
+        old: event.oldDraggableIndex,
+      }
+  } else {
+    return {
+      new: event.newIndex,
+      old: event.oldIndex,
+    }
+  }
+}
+
 @Directive({
   selector: '[sortablejs]',
 })
@@ -154,8 +168,9 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
       },
       onUpdate: (event: SortableEvent) => {
         const bindings = this.getBindings();
+        const indexes = getIndexesFromEvent(event)
 
-        bindings.injectIntoEvery(event.newDraggableIndex, bindings.extractFromEvery(event.oldDraggableIndex));
+        bindings.injectIntoEvery(indexes.new, bindings.extractFromEvery(indexes.old));
         this.proxyEvent('onUpdate', event);
       },
     };
@@ -166,8 +181,8 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 interface SortableEvent {
   oldIndex: number;
   newIndex: number;
-  oldDraggableIndex: number;
-  newDraggableIndex: number;
+  oldDraggableIndex?: number;
+  newDraggableIndex?: number;
   item: HTMLElement;
   clone: HTMLElement;
 }
