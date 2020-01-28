@@ -13,7 +13,8 @@ Trees are also supported: [tree with fake root element (\*ngFor once, root can a
 ## Installation
 
 ```sh
-npm i ngx-sortablejs sortablejs@~1.9.0
+npm i -S ngx-sortablejs sortablejs
+npm i -D @types/sortablejs
 ```
 
 You are configured now. If you use Webpack or Angular CLI go to the usage. If you have SystemJS, that's sad, but you can go to the end of the document to find configuration steps there.
