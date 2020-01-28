@@ -1,3 +1,12 @@
+## [3.1.4](https://github.com/SortableJS/angular-sortablejs/compare/v3.1.3...v3.1.4) (2020-01-28)
+
+
+### Bug Fixes
+
+* provide backward compatibility for sortablejs < 1.9.0 ([8e97d32](https://github.com/SortableJS/angular-sortablejs/commit/8e97d32a7b06e013d2fde8283f40665ea9f07205))
+* replace default index with draggable indexes. Fixes: [#164](https://github.com/SortableJS/angular-sortablejs/issues/164) ([615d9fe](https://github.com/SortableJS/angular-sortablejs/commit/615d9fe62a1d4c07a2baed98714af12b845e9bc6))
+* update dependencies ([4d3fb2b](https://github.com/SortableJS/angular-sortablejs/commit/4d3fb2b9d3fc8be15348cfa7c630b4f1cd34c8bb))
+
 ## [3.1.3](https://github.com/SortableJS/angular-sortablejs/compare/v3.1.2...v3.1.3) (2019-07-09)
 
 
