@@ -5,23 +5,16 @@
     "target": "es2015",
     "declaration": true,
     "inlineSources": true,
-    "types": [
-      "node"
-    ],
-    "lib": [
-      "dom",
-      "es2018"
-    ]
+    "types": ["node"],
+    "lib": ["dom", "es2018"]
   },
   "angularCompilerOptions": {
+    "enableIvy": false,
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "enableResourceInlining": true
   },
-  "exclude": [
-    "src/test.ts",
-    "**/*.spec.ts"
-  ]
+  "exclude": ["src/test.ts", "**/*.spec.ts"]
 }
