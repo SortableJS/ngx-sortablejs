@@ -9,7 +9,7 @@ import { SortablejsDirective } from './sortablejs.directive';
 })
 export class SortablejsModule {
 
-  public static forRoot(globalOptions: SortablejsOptions): ModuleWithProviders {
+  public static forRoot(globalOptions: SortablejsOptions): ModuleWithProviders<SortablejsModule> {
     return {
       ngModule: SortablejsModule,
       providers: [
