@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SortablejsOptions } from 'ngx-sortablejs';
+import { Options } from 'sortablejs';
 
 @Component({
   selector: 'app-multiple-lists',
@@ -25,7 +25,7 @@ export class MultipleListsComponent {
     '10',
   ];
 
-  normalOptions: SortablejsOptions = {
+  normalOptions: Options = {
     group: 'normal-group',
   };
 
@@ -47,7 +47,7 @@ export class MultipleListsComponent {
     '10',
   ];
 
-  clone1Options: SortablejsOptions = {
+  clone1Options: Options = {
     group: {
       name: 'clone-group',
       pull: 'clone',
@@ -55,7 +55,7 @@ export class MultipleListsComponent {
     },
   };
 
-  clone2Options: SortablejsOptions = {
+  clone2Options: Options = {
     group: 'clone-group',
   };
 
@@ -85,21 +85,21 @@ export class MultipleListsComponent {
     '13',
   ];
 
-  list1Options: SortablejsOptions = {
+  list1Options: Options = {
     group: {
       name: 'group1',
       put: false,
     },
   };
 
-  list2Options: SortablejsOptions = {
+  list2Options: Options = {
     group: {
       name: 'group2',
       put: ['group1', 'group2'],
     },
   };
 
-  list3Options: SortablejsOptions = {
+  list3Options: Options = {
     group: {
       name: 'group2',
       pull: 'clone',
@@ -108,7 +108,7 @@ export class MultipleListsComponent {
     },
   };
 
-  list4Options: SortablejsOptions = {
+  list4Options: Options = {
     group: {
       name: 'group2',
       put: ['group1'],
