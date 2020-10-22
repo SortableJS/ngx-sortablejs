@@ -14,11 +14,11 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "gh-pages": "git reset && rm -rf docs && cp -R dist/ngx-sortablejs-app docs && cp docs/index.html docs/404.html && git add docs",
-    "gh-pages:apply": "npm run gh-pages && git commit -m 'docs: update github pages' && git push",
-    "validate-release": "npm run lint && npm run test:app:ci && npm run test:lib:ci",
-    "prepare-release": "npm run build:lib && cp README.md dist/ngx-sortablejs && cp LICENSE.md dist/ngx-sortablejs && npm run build:app",
-    "release": "npm run validate-release && npm run prepare-release && semantic-release -d",
-    "release:apply": "npm run validate-release && npm run prepare-release && semantic-release --ci false"
+    "gh-pages:apply": "yarn run gh-pages && git commit -m 'docs: update github pages' && git push",
+    "validate-release": "yarn run lint && yarn run test:app:ci && yarn run test:lib:ci",
+    "prepare-release": "yarn run build:lib && cp README.md dist/ngx-sortablejs && cp LICENSE.md dist/ngx-sortablejs && yarn run build:app",
+    "release": "yarn run validate-release && yarn run prepare-release && semantic-release -d",
+    "release:apply": "yarn run validate-release && yarn run prepare-release && semantic-release --ci false"
   },
   "private": true,
   "dependencies": {
