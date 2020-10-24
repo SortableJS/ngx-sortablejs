@@ -54,8 +54,6 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
   private sortableInstance: any;
 
-  @Input() runInsideAngular = false; // to be deprecated
-
   @Output() sortablejsInit = new EventEmitter();
 
   constructor(
@@ -69,11 +67,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     if (Sortable && Sortable.create) { // Sortable does not exist in angular universal (SSR)
-      if (this.runInsideAngular) {
-        this.create();
-      } else {
-        this.zone.runOutsideAngular(() => this.create());
-      }
+      this.create();
     }
   }
 
