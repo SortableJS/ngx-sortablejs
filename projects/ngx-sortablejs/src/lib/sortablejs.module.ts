@@ -1,7 +1,7 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { GLOBALS } from './globals';
-import { SortablejsOptions } from './sortablejs-options';
-import { SortablejsDirective } from './sortablejs.directive';
+import {ModuleWithProviders, NgModule} from '@angular/core';
+import {GLOBALS} from './globals';
+import {SortablejsDirective} from './sortablejs.directive';
+import {Options} from 'sortablejs';
 
 @NgModule({
   declarations: [SortablejsDirective],
@@ -9,11 +9,11 @@ import { SortablejsDirective } from './sortablejs.directive';
 })
 export class SortablejsModule {
 
-  public static forRoot(globalOptions: SortablejsOptions): ModuleWithProviders {
+  public static forRoot(globalOptions: Options): ModuleWithProviders {
     return {
       ngModule: SortablejsModule,
       providers: [
-        { provide: GLOBALS, useValue: globalOptions },
+        {provide: GLOBALS, useValue: globalOptions},
       ],
     };
   }

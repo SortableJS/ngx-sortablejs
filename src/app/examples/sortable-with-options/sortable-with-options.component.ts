@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SortablejsOptions } from 'ngx-sortablejs';
+import {Options} from 'sortablejs';
 
 @Component({
   selector: 'app-sortable-with-options',
@@ -28,15 +28,15 @@ export class SortableWithOptionsComponent {
 
   scrollableItems = Array.from({ length: 30 }).map((u, i) => i + 1);
 
-  draggableOptions: SortablejsOptions = {
+  draggableOptions: Options = {
     draggable: '.draggable',
   };
 
-  eventOptions: SortablejsOptions = {
+  eventOptions: Options = {
     onUpdate: () => this.eventUpdateCounter++,
   };
 
-  scrollableOptions: SortablejsOptions = {
+  scrollableOptions: Options = {
     scroll: true,
     scrollSensitivity: 100,
   };

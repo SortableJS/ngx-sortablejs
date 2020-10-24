@@ -1,8 +1,9 @@
-import { SortablejsBindingTarget } from './sortablejs-binding-target';
+import {SortableData} from './sortablejs.directive';
 
 export class SortablejsBinding {
 
-  constructor(private target: SortablejsBindingTarget) { }
+  constructor(private target: SortableData) {
+  }
 
   insert(index: number, item: any) {
     if (this.isFormArray) {

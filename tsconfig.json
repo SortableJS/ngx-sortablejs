@@ -21,10 +21,10 @@
     ],
     "paths": {
       "ngx-sortablejs": [
-        "dist/ngx-sortablejs"
+        "./projects/ngx-sortablejs"
       ],
       "ngx-sortablejs/*": [
-        "dist/ngx-sortablejs/*"
+        "./projects/ngx-sortablejs/*"
       ]
     }
   }

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SortablejsOptions } from 'ngx-sortablejs';
+import {Options} from 'sortablejs';
 
 @Component({
   selector: 'app-child-component',
@@ -11,7 +11,7 @@ export class ChildComponentComponent {
   @Input()
   list: string[];
 
-  options: SortablejsOptions = {
+  options: Options = {
     group: 'test',
   };
 

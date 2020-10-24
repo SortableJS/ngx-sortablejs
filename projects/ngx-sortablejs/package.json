@@ -21,5 +21,6 @@
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",
     "sortablejs": ">=1.7.0"
-  }
+  },
+  "main": "src/public-api.ts"
 }

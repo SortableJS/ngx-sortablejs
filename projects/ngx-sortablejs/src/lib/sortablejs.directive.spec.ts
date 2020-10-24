@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
-import { SortablejsModule } from './sortablejs.module';
+import {Component} from '@angular/core';
+import {async, TestBed} from '@angular/core/testing';
+import {SortablejsModule} from './sortablejs.module';
 
 describe('SortablejsDirective', () => {
   @Component({

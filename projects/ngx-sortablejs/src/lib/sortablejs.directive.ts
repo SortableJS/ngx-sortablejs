@@ -1,17 +1,32 @@
-import { Directive, ElementRef, EventEmitter, Inject, Input, NgZone, OnChanges, OnDestroy, OnInit, Optional, Output, Renderer2, SimpleChange } from '@angular/core';
-import Sortable from 'sortablejs';
-import { GLOBALS } from './globals';
-import { SortablejsBindingTarget } from './sortablejs-binding-target';
-import { SortablejsBindings } from './sortablejs-bindings';
-import { SortablejsOptions } from './sortablejs-options';
-import { SortablejsService } from './sortablejs.service';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  Renderer2,
+  SimpleChange,
+} from '@angular/core';
+import Sortable, {Options} from 'sortablejs';
+import {GLOBALS} from './globals';
+import {SortablejsBindings} from './sortablejs-bindings';
+import {SortablejsService} from './sortablejs.service';
+import {FormArray} from '@angular/forms';
+
+export type SortableData = FormArray | any[];
 
 const getIndexesFromEvent = (event: SortableEvent) => {
   if (event.hasOwnProperty('newDraggableIndex') && event.hasOwnProperty('oldDraggableIndex')) {
-      return {
-        new: event.newDraggableIndex,
-        old: event.oldDraggableIndex,
-      };
+    return {
+      new: event.newDraggableIndex,
+      old: event.oldDraggableIndex,
+    };
   } else {
     return {
       new: event.newIndex,
@@ -26,13 +41,13 @@ const getIndexesFromEvent = (event: SortableEvent) => {
 export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
 
   @Input()
-  sortablejs: SortablejsBindingTarget; // array or a FormArray
+  sortablejs: SortableData; // array or a FormArray
 
   @Input()
   sortablejsContainer: string;
 
   @Input()
-  sortablejsOptions: SortablejsOptions;
+  sortablejsOptions: Options;
 
   @Input()
   sortablejsCloneFunction: <T>(item: T) => T;
@@ -44,12 +59,13 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   @Output() sortablejsInit = new EventEmitter();
 
   constructor(
-    @Optional() @Inject(GLOBALS) private globalConfig: SortablejsOptions,
+    @Optional() @Inject(GLOBALS) private globalConfig: Options,
     private service: SortablejsService,
     private element: ElementRef,
     private zone: NgZone,
     private renderer: Renderer2,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     if (Sortable && Sortable.create) { // Sortable does not exist in angular universal (SSR)
@@ -65,8 +81,8 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     const optionsChange: SimpleChange = changes.sortablejsOptions;
 
     if (optionsChange && !optionsChange.isFirstChange()) {
-      const previousOptions: SortablejsOptions = optionsChange.previousValue;
-      const currentOptions: SortablejsOptions = optionsChange.currentValue;
+      const previousOptions: Options = optionsChange.previousValue;
+      const currentOptions: Options = optionsChange.currentValue;
 
       Object.keys(currentOptions).forEach(optionName => {
         if (currentOptions[optionName] !== previousOptions[optionName]) {
@@ -103,11 +119,11 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   private get options() {
-    return { ...this.optionsWithoutEvents, ...this.overridenOptions };
+    return {...this.optionsWithoutEvents, ...this.overridenOptions};
   }
 
   private get optionsWithoutEvents() {
-    return { ...(this.globalConfig || {}), ...(this.sortablejsOptions || {}) };
+    return {...(this.globalConfig || {}), ...(this.sortablejsOptions || {})};
   }
 
   private proxyEvent(eventName: string, ...params: any[]) {
@@ -127,7 +143,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     return (this.sortablejsCloneFunction || (subitem => subitem))(item);
   }
 
-  private get overridenOptions(): SortablejsOptions {
+  private get overridenOptions(): Options {
     // always intercept standard events but act only in case items are set (bindingEnabled)
     // allows to forget about tracking this.items changes
     return {

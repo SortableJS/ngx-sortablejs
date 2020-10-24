@@ -1,11 +1,11 @@
 import { SortablejsBinding } from './sortablejs-binding';
-import { SortablejsBindingTarget } from './sortablejs-binding-target';
+import {SortableData} from './sortablejs.directive';
 
 export class SortablejsBindings {
 
   bindings: SortablejsBinding[];
 
-  constructor(bindingTargets: SortablejsBindingTarget[]) {
+  constructor(bindingTargets: SortableData[]) {
     this.bindings = bindingTargets.map(target => new SortablejsBinding(target));
   }
 
