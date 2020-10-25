@@ -17,9 +17,8 @@ import Sortable, {Options} from 'sortablejs';
 import {GLOBALS} from './globals';
 import {SortablejsBindings} from './sortablejs-bindings';
 import {SortablejsService} from './sortablejs.service';
-import {FormArray} from '@angular/forms';
 
-export type SortableData = FormArray | any[];
+export type SortableData = any | any[];
 
 const getIndexesFromEvent = (event: SortableEvent) => {
   if (event.hasOwnProperty('newDraggableIndex') && event.hasOwnProperty('oldDraggableIndex')) {
