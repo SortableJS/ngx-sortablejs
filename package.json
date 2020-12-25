@@ -61,7 +61,7 @@
     "ng-packagr": "^11.0.3",
     "ngx-spec": "^2.1.4",
     "protractor": "~7.0.0",
-    "semantic-release": "^15.14.0",
+    "semantic-release": "^17.2.3",
     "ts-node": "~7.0.0",
     "tsickle": "^0.39.1",
     "tslint": "~6.1.3",
