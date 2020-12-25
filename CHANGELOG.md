@@ -1,3 +1,10 @@
+# [10.1.0](https://github.com/SortableJS/ngx-sortablejs/compare/v10.0.0...v10.1.0) (2020-12-25)
+
+
+### Features
+
+* migrate to Angular 11 ([2acf12e](https://github.com/SortableJS/ngx-sortablejs/commit/2acf12e239e3f97ef4c26ea52295ae4007197798))
+
 # [10.0.0](https://github.com/SortableJS/ngx-sortablejs/compare/v3.1.4...v10.0.0) (2020-10-25)
 
 ### Bug Fixes
