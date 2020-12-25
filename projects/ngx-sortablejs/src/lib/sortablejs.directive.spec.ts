@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {async, TestBed} from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import {SortablejsModule} from './sortablejs.module';
 
 describe('SortablejsDirective', () => {
@@ -14,7 +14,7 @@ describe('SortablejsDirective', () => {
     items = [1, 2, 3, 4, 5];
   }
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         TestComponent1,

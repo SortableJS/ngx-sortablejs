@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SortablejsModule } from 'ngx-sortablejs';
 import { SortableFormArrayComponent } from './sortable-form-array.component';
@@ -7,7 +7,7 @@ describe('SortableFormArrayComponent', () => {
   let component: SortableFormArrayComponent;
   let fixture: ComponentFixture<SortableFormArrayComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SortableFormArrayComponent],
       imports: [

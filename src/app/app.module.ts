@@ -19,29 +19,28 @@ import { TestCasesModule } from './test-cases/test-cases.module';
   imports: [
     BrowserModule,
     RouterModule.forRoot([
-      { path: '', pathMatch: 'full', redirectTo: 'sortable-array' },
-      {
+    { path: '', pathMatch: 'full', redirectTo: 'sortable-array' },
+    {
         path: 'sortable-array',
         component: SimpleSortableComponent,
-      },
-      {
+    },
+    {
         path: 'sortable-form-array',
         component: SortableFormArrayComponent,
-      },
-      {
+    },
+    {
         path: 'custom-options',
         component: SortableWithOptionsComponent,
-      },
-      {
+    },
+    {
         path: 'multiple-lists',
         component: MultipleListsComponent,
-      },
-
-      {
+    },
+    {
         path: 'tests/cross-components-multiple-list',
         component: CrossComponentsMultipleListsComponent,
-      },
-    ]),
+    },
+], { relativeLinkResolution: 'legacy' }),
 
     // global settings
     SortablejsModule.forRoot({
