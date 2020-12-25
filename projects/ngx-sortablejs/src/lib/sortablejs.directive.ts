@@ -49,7 +49,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
   sortablejsOptions: Options;
 
   @Input()
-  sortablejsCloneFunction: <T>(item: T) => T;
+  sortablejsCloneFunction: (item: any) => any;
 
   private sortableInstance: any;
 
