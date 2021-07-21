@@ -143,6 +143,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
       onAdd: (event: SortableEvent) => {
         this.service.transfer = (items: any[]) => {
           this.getBindings().injectIntoEvery(event.newIndex, items);
+          event.addedData = items.length ? items[0] : null;
           this.proxyEvent('onAdd', event);
         };
 
@@ -167,7 +168,9 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
             this.renderer.insertBefore(event.clone.parentNode, event.item, event.clone);
             this.renderer.removeChild(event.clone.parentNode, event.clone);
           } else {
-            this.service.transfer(bindings.extractFromEvery(event.oldIndex));
+            const removedData = bindings.extractFromEvery(event.oldIndex);
+            this.service.transfer(removedData);
+            event.removedData = removedData.length ? removedData[0] : null;
           }
 
           this.service.transfer = null;
@@ -178,8 +181,9 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
       onUpdate: (event: SortableEvent) => {
         const bindings = this.getBindings();
         const indexes = getIndexesFromEvent(event);
-
-        bindings.injectIntoEvery(indexes.new, bindings.extractFromEvery(indexes.old));
+        const removedData = bindings.extractFromEvery(indexes.old);
+        bindings.injectIntoEvery(indexes.new, removedData);
+        event.updatedData = removedData.length ? removedData[0] : null;
         this.proxyEvent('onUpdate', event);
       },
     };
