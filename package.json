@@ -13,14 +13,27 @@
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "gh-pages": "git reset && cpr dist/ngx-sortablejs-app docs -d  && cpr docs/index.html docs/404.html && git add docs",
-    "gh-pages:apply": "yarn run gh-pages && git commit -m 'docs: update github pages' && git push",
+    "gh-pages": "deploy-to-git",
+    "gh-pages:apply": "rimraf ./dist/ngx-sortablejs-app && mkdirp ./dist/ngx-sortablejs-app && yarn gh-pages",
     "validate-release": "yarn run lint && yarn run test:app:ci && yarn run test:lib:ci",
     "prepare-release": "yarn run build:lib && cpr README.md dist/ngx-sortablejs/README.md  && cpr LICENSE.md dist/ngx-sortablejs/LICENSE.md  && yarn run build:app",
     "release": "yarn run validate-release && yarn run prepare-release && semantic-release -d",
     "release:apply": "yarn run validate-release && yarn run prepare-release && semantic-release --ci false"
   },
   "private": true,
+  "config": {
+    "deployToGit": {
+      "repository": "git@github.com:SortableJS/ngx-sortablejs.git",
+      "branch": "gh-pages",
+      "folder": "dist/ngx-sortablejs-app",
+      "script": "ng build ngx-sortablejs-app --configuration production -- --base-href=/ngx-sortablejs/ --delete-output-path=false",
+      "commit": "Publishing $npm_package_version",
+      "user": {
+        "name": "CodingCloud9527",
+        "email": "CodingCloud9527@gmail.com"
+      }
+    }
+  },
   "dependencies": {
     "@angular/animations": "^13.2.0",
     "@angular/common": "^13.2.0",
@@ -57,6 +70,7 @@
     "@typescript-eslint/parser": "^5.10.1",
     "coveralls": "^3.1.1",
     "cpr": "^3.0.1",
+    "deploy-to-git": "^0.4.1",
     "eslint": "^8.7.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsdoc": "^37.7.0",
@@ -69,9 +83,11 @@
     "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "^4.0.1",
     "karma-jasmine-html-reporter": "^1.7.0",
+    "mkdirp": "^1.0.4",
     "ng-packagr": "^13.2.0",
     "ngx-spec": "^2.1.5",
     "protractor": "^7.0.0",
+    "rimraf": "^3.0.2",
     "semantic-release": "^19.0.2",
     "ts-node": "^10.4.0",
     "typescript": ">=4.5 <4.6"
