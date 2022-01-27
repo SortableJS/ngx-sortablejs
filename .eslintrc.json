@@ -60,7 +60,8 @@
             "next": "return"
           }
         ],
-        "unicorn/filename-case": "error"
+        "unicorn/filename-case": "error",
+        "@typescript-eslint/member-ordering": "off"
       }
     },
     {
