@@ -18,9 +18,9 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@angular/common": "^11.0.0",
-    "@angular/core": "^11.0.0",
-    "sortablejs": ">=1.7.0"
+    "@angular/common": "^13.0.0",
+    "@angular/core": "^13.0.0",
+    "sortablejs": ">=1.14.0"
   },
   "main": "src/public-api.ts"
 }
