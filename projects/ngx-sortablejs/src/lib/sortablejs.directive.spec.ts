@@ -10,6 +10,7 @@ describe('SortablejsDirective', () => {
       </div>
     `,
   })
+  // eslint-disable-next-line @angular-eslint/component-class-suffix
   class TestComponent1 {
     items = [1, 2, 3, 4, 5];
   }
