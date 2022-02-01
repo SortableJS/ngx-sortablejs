@@ -142,7 +142,8 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
     return {
       onAdd: (event: SortableEvent) => {
         this.service.transfer = (items: any[]) => {
-          this.getBindings().injectIntoEvery(event.newIndex, items);
+          const indexes = getIndexesFromEvent(event);
+          this.getBindings().injectIntoEvery(indexes.new, items);
           this.proxyEvent('onAdd', event);
         };
 
@@ -150,10 +151,10 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
       },
       onRemove: (event: SortableEvent) => {
         const bindings = this.getBindings();
-
+        const indexes = getIndexesFromEvent(event);
         if (bindings.provided) {
           if (this.isCloning) {
-            this.service.transfer(bindings.getFromEvery(event.oldIndex).map(item => this.clone(item)));
+            this.service.transfer(bindings.getFromEvery(indexes.old).map(item => this.clone(item)));
 
             // great thanks to https://github.com/tauu
             // event.item is the original item from the source list which is moved to the target list
@@ -167,7 +168,7 @@ export class SortablejsDirective implements OnInit, OnChanges, OnDestroy {
             this.renderer.insertBefore(event.clone.parentNode, event.item, event.clone);
             this.renderer.removeChild(event.clone.parentNode, event.clone);
           } else {
-            this.service.transfer(bindings.extractFromEvery(event.oldIndex));
+            this.service.transfer(bindings.extractFromEvery(indexes.old));
           }
 
           this.service.transfer = null;
