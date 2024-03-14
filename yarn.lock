@@ -9347,7 +9347,7 @@
   "version" "2.0.0"
 
 "set-blocking@~2.0.0":
-  "integrity" "sha1-BF+XgtARrppoA93TgrJDkrPYkPc="
+  "integrity" "sha1-BF+XgtARrppoA93TgrJDkrPYkPc=sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw=="
   "resolved" "https://registry.npmjs.org/set-blocking/-/set-blocking-2.0.0.tgz"
   "version" "2.0.0"
 
